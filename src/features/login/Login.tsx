@@ -7,8 +7,12 @@ import { reverbClientWithAuth } from '../../remote/reverb-api/reverbClient'
 import { setUserAsync } from './userSlice'
 import { useHistory } from 'react-router-dom'
 import { getIdToken } from 'firebase/auth'
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 export let util = {loginAccount: (event: any) => {}};
+let pwr = {passwordReset: (event: any) => {}};
+//Firebase
+const auth = getAuth();
 
 export default function Login() {
 
@@ -16,6 +20,7 @@ export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
+
 
   // Verifying login credentials through firebase, alerting with error message coming from Firebase
   util.loginAccount = async (event: any) => {
@@ -33,7 +38,24 @@ export default function Login() {
 
     }
   }
+  
+  pwr.passwordReset = async (event: any) => {
+      //Firebase
+    if (emailRef.current !== null) {
+      sendPasswordResetEmail(auth, emailRef.current.value)
+      .then(() => {
+        // Password reset email sent!
+        // make a popup or something..
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+      }
 
+  }
+  
   return (
     <Container className="d-flex align-items-center justify-content-center"
       style={{ minHeight: "100vh" }}
@@ -53,6 +75,10 @@ export default function Login() {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" ref={passwordRef} required />
                   </Form.Group>
+                  {/* update styling for cleaner code */}
+                  <div id="passwordReset" onClick={(event) => pwr.passwordReset(event)} style={{cursor: 'pointer'}}> 
+                    Reset your password.
+                  </div>
                   <Button data-testid="submitButton" className="w-100 mt-2" type="submit" onClick={(event) => util.loginAccount(event)}>Login</Button>
                 </Form>
               </Card.Body>
