@@ -8,7 +8,6 @@ import { getAuth } from "firebase/auth"
 // 	storageBucket: "auth-redux-bb19a.appspot.com",
 // 	messagingSenderId: "45081832379",
 // 	appId: "1:45081832379:web:84c013efc60f96a5b4f29e"
-// } )
 
 // const app = firebase.initializeApp( {
 // 	apiKey: "AIzaSyAn8qrDSkPbfAYsfDcVOR8uPvvONS4kaKU",
@@ -20,12 +19,12 @@ import { getAuth } from "firebase/auth"
 // })
 
 const app = firebase.initializeApp( {
-	apiKey: "AIzaSyBby_7WCbYsbtvGzwuCfQHCQgb68NW0Sr4",
-	authDomain: "reverb-335c8.firebaseapp.com",
-	projectId: "reverb-335c8",
-	storageBucket: "reverb-335c8.appspot.com",
-	messagingSenderId: "828869153665",
-	appId: "1:828869153665:web:f5be26195a8ae620690e80"
+	apiKey: "AIzaSyA7yH90NTz5v2OCDC0gYk3OUkAv4unDCAs",
+	authDomain: "alreverb3.firebaseapp.com",
+	projectId: "alreverb3",
+	storageBucket: "alreverb3.appspot.com",
+	messagingSenderId: "261611516418",
+	appId: "1:261611516418:web:497986d4b9a78c554a2d1b"
 } )
   
 
