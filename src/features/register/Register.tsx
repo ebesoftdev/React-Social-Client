@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { Form, Button, Card } from 'react-bootstrap'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebase'
@@ -16,8 +16,8 @@ export default function Register() {
   // Registering user into backend database
   const registerUser = (token: string) => {
 
-  //const url = 'http://Reverbapiapplication-env.eba-qjeevjhg.us-west-1.elasticbeanstalk.com/api/user/register';
-   const url = 'http://localhost:5000/api/user/register';
+  const url = 'http://Reverbapiapplication-env.eba-qjeevjhg.us-west-1.elasticbeanstalk.com/api/user/register';
+   //const url = 'http://localhost:5000/api/user/register';
 
     const header = {
       'Authorization': token,
@@ -36,9 +36,11 @@ export default function Register() {
     event.preventDefault();
 
     if (emailRef.current !== null && passwordRef.current !== null) {
+
       // Creating a user within firebase, a user object is returned which contains its token
       createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
         .then(async (userCredential) => {
+          
           const token = await userCredential.user.getIdToken(true);
           registerUser(token);
 
@@ -46,6 +48,7 @@ export default function Register() {
           history.push("/login");
         })
         .catch((error) => {
+          
           const errorCode = error.code.slice(5);
           swal("Uh oh!", errorCode, "error")
         });

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { createGroup } from "./Group.api";
 import { NewGroupRequest } from "./dtos/NewGroupRequest"
 
-export function CreateGroupPage() {
+export default function CreateGroupPage() {
 
     const history = useHistory();
     const [groupName, setGroupName] = useState("");

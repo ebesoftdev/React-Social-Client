@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import SubmitPost from '../post/SubmitPost'
-import { getGroupPostsAsync, getPostsAsync, postGroupPostAsync, postPostAsync, selectPosts } from '../post/postSlice'
-import PostComponent from '../post/PostComponent'
-import SubmitComment from '../comment/SubmitComment';
+import { selectPosts, add, update } from '../post/postSlice';
+import { getAllGroupPosts, getAllPosts, createGroupPost, createPost } from '../post/post.api';
 import { createComment } from '../comment/comment.api';
 import { initialPost } from '../post/post';
 import { initialComment } from '../comment/comment';
 import RefreshIcon from '../../assets/images/refreshicon.svg'
 import { selectGroup } from '../group/groupSlice';
 import { Post } from "../post/post"
+
+// components
 import SearchBar from '../search/SearchBar';
+import PostComponent from '../post/PostComponent'
+import SubmitComment from '../comment/SubmitComment';
+import SubmitPost from '../post/SubmitPost'
 
 export let util = {
   updateAll: (isGroup: boolean) => { },
@@ -37,14 +40,29 @@ function Feed(props: {isGroup: boolean}) {
 
   const group = useSelector(selectGroup);
 
-  util.updateAll = (isGroup: boolean) => {
-    isGroup ? 
-    dispatch(getGroupPostsAsync(group.name))
-    :
-    dispatch(getPostsAsync({}));
-    setShouldUpdateLikes([!shouldUpdateLikes[0]]); // :^) 
+  util.updateAll = async (isGroup: boolean) => {
+    let posts;
+    if (isGroup) {
+       posts = await getAllGroupPosts(group.name);
+    } else {
+       posts = await getAllPosts();
+    }
+    // posts = [{
+    //   id: "123445",
+    //   title: "title",
+    //   postText: "some text here",
+    //   contentLink: "",
+    //   contentType: "",
+    //   date: new Date(),
+    //   comments: [],
+    //   authorID: "Aidan",
+    //   groupID: "",
+    //   groupName: ""
+    // }];
     
-    // console.log("Updated feed");
+    dispatch(update(posts));
+      
+    setShouldUpdateLikes([!shouldUpdateLikes[0]]);
   }
 
   const [comment, setComment] = useState(initialComment);
@@ -65,8 +83,23 @@ function Feed(props: {isGroup: boolean}) {
     createComment(postId, comment).then(() => util.updateAll(props.isGroup));
   }
 
-  util.dispatchPost = (isGroup) => {
-    isGroup ? dispatch(postGroupPostAsync(post)) : dispatch(postPostAsync(post));
+  util.dispatchPost = async (isGroup) => {
+    let createdPost;
+     isGroup ? createdPost = await createGroupPost(post) : createdPost = await createPost(post);
+    // createdPost = {
+    //   id: "123445",
+    //   title: "title",
+    //   postText: "some text here",
+    //   contentLink: "",
+    //   contentType: "",
+    //   date: new Date(),
+    //   comments: [],
+    //   authorID: "Aidan",
+    //   groupID: "",
+    //   groupName: ""
+    // };
+
+    dispatch(add(createdPost));
   }
 
   useEffect(() => {

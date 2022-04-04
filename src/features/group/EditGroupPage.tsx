@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { selectGroup } from "./groupSlice";
 import DeleteGroup from "./DeleteGroup";
 
-export function EditGroupPage() {
+export default function EditGroupPage() {
 
     const history = useHistory();
     const [newGroupName, setGroupName] = useState("");

@@ -1,6 +1,4 @@
-import React from "react";
 import {Button, Col, Form, Modal, Row} from "react-bootstrap";
-import { propTypes } from "react-bootstrap/esm/Image";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { selectPosts } from "../post/postSlice";
@@ -41,5 +39,4 @@ export default function DeleteGroup(props: any) {
             </Modal.Footer>
         </Modal>
     );
-
 }

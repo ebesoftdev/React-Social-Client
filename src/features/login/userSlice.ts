@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getUser } from "./Login.api";
 import User from "./User";
-import { RootState, store } from "../../app/store";
+import { RootState } from "../../app/store";
 
 
 interface UserState {
@@ -14,31 +14,18 @@ const initialState: UserState = {
     email: ""
 }
 
-export const setUserAsync = createAsyncThunk<User, object>(
-    'user/get/async',
-    async ( nothing, thunkAPI ) =>
-    {
-        try
-        {
-            return await getUser();
-        } catch ( error )
-        {
-            return thunkAPI.rejectWithValue( error );
-        }
-    }
-);
-
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-    },
-    extraReducers: (builder) => {
-        builder.addCase(setUserAsync.fulfilled, (state, action) => {
-            return action.payload;
-        })
+      updateUser: (state, action) => {
+        state.id = action.payload.id;
+        state.email = action.payload.email;
+      }
     }
 })
+
+export const { updateUser } = userSlice.actions;
 
 export const selectUser = ( state: RootState ) =>
 {

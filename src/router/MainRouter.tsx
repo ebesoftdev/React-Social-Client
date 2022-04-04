@@ -1,18 +1,21 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import Feed from "../features/feed/Feed";
-import Login from "../features/login/Login";
-import Register from "../features/register/Register";
-import Landing from "../features/landing/Landing";
+
 import { useAppDispatch } from "../app/hooks";
 import { logout } from '../features/login/authSlice'
+
+// components
 import ProfilePage from "../features/profile/ProfilePage";
 import EditProfilePage from "../features/profile/EditProfilePage";
+import CreateGroupPage from "../features/group/CreateGroupPage";
 import GroupPage from "../features/group/GroupPage";
-import { CreateGroupPage } from "../features/group/CreateGroupPage";
-import { EditGroupPage } from "../features/group/EditGroupPage"
-import FollowingFeed from "../features/feed/FollowingFeed";
+import EditGroupPage from "../features/group/EditGroupPage"
 import PersonalFeed from "../features/feed/PersonalFeed";
+import FollowingFeed from "../features/feed/FollowingFeed";
+import Feed from "../features/feed/Feed";
+import Register from "../features/register/Register";
+import Login from "../features/login/Login";
+import Landing from "../features/landing/Landing";
 
 interface MainRouterProps{
   loggedIn:string
@@ -28,9 +31,8 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
 
   // Login is now handled in the Login page component.
 
-  let toReturn = <></>;
   if (loggedIn) {
-    toReturn =
+    return (
       <div id="container-to-remove">
         <Switch>
           <Redirect from="/user_profile/:id" to='/profile/:id'/>
@@ -65,10 +67,10 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
             <Feed isGroup={false}/>
           </Route>
         </Switch>
-      </div>
+      </div> )
   }
   else {
-    toReturn =
+    return (
       <div>
         <Switch>
           <Route path="/register">
@@ -81,13 +83,8 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
             <Landing />
           </Route>
         </Switch>
-      </div>
+      </div> )
   }
-  return (
-    <>
-      {toReturn}
-    </>
-  )
 }
 
 export default MainRouter

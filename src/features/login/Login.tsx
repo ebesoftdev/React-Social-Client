@@ -1,13 +1,14 @@
-import { useRef } from 'react'
-import { Form, Button, Card } from 'react-bootstrap'
-import { Container, Row, Col } from 'react-bootstrap'
-import { useAppDispatch } from '../../app/hooks'
-import { setTokenAsync } from './authSlice'
-import { reverbClientWithAuth } from '../../remote/reverb-api/reverbClient'
-import { setUserAsync } from './userSlice'
-import { useHistory } from 'react-router-dom'
-import { getIdToken } from 'firebase/auth'
+import { useRef } from 'react';
+import { Form, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useAppDispatch } from '../../app/hooks';
+import { getToken } from './token.api';
+import { getUser } from './Login.api';
+import { login } from './authSlice';
+import { updateUser } from './userSlice';
+import { useHistory } from 'react-router-dom';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import swal from 'sweetalert';
 
 export let util = {loginAccount: (event: any) => {}};
 let pwr = {passwordReset: (event: any) => {}};
@@ -31,11 +32,26 @@ export default function Login() {
       const email: string = emailRef.current.value;
       const password: string = passwordRef.current.value;
 
-      // Token is set to store on login
-      await dispatch(setTokenAsync({ email, password }));
-      await dispatch(setUserAsync({}));
-      history.push("/feed")
+      try {
+        const tokenObj = await getToken(email, password);
+        dispatch(login(tokenObj.token));
 
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
+        const userObj = await getUser();
+        // const userObj = {
+        //   id: "123445",
+        //   email
+        // };
+        dispatch(updateUser(userObj));
+        history.push("/feed");
+
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
   
@@ -44,12 +60,14 @@ export default function Login() {
     if (emailRef.current !== null) {
       sendPasswordResetEmail(auth, emailRef.current.value)
       .then(() => {
+        swal("Completed!", "Password reset instructions sent to" + emailRef.current?.value + "!", "success");
         // Password reset email sent!
-        // make a popup or something..
+        // makes a popup or something...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        swal("Unsuccessful", "User not found, please enter another email address", "error");
         // ..
       });
       }
