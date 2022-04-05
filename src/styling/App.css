@@ -193,6 +193,11 @@ h3 {
   margin: 40px;
 }
 
+#passwordReset {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
 .loginRow {
   display: block;
   text-align: center;

@@ -93,11 +93,11 @@ export default function Login() {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" ref={passwordRef} required />
                   </Form.Group>
-                  {/* update styling for cleaner code */}
-                  <div id="passwordReset" onClick={(event) => pwr.passwordReset(event)} style={{cursor: 'pointer'}}> 
-                    Reset your password.
-                  </div>
                   <Button data-testid="submitButton" className="w-100 mt-2" type="submit" onClick={(event) => util.loginAccount(event)}>Login</Button>
+                    {/* update styling for cleaner code */}
+                  <p id="passwordReset" onClick={(event) => pwr.passwordReset(event)} style={{cursor: 'pointer'}}> 
+                    Reset your password.
+                  </p>
                 </Form>
               </Card.Body>
             </Card>
