@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { reverbClient } from "../../remote/reverb-api/reverbClient";
+import { reverbClientWithAuth } from "../../remote/reverb-api/reverbClient";
 import ResultsList from './ResultsList';
 import SearchResult from './SearchResult';
 
@@ -9,7 +9,7 @@ export default function SearchBar() {
   const type:string = "people";
 
   async function getSearch() {
-    const resp = await reverbClient.get(`/api/search?query=${input}`);
+    const resp = await reverbClientWithAuth.get(`/api/search?query=${input}`);
     if (resp.status.toString()[0] != "2") {
       console.log(resp.data);
     }
