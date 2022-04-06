@@ -2,20 +2,17 @@ import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPosts, add, update } from '../post/postSlice';
-import { getAllBookmarksForAuthUser } from './bookmarks.api';
+import { getBookmarksByAuthUser } from '../bookmark/bookmarks.api';
 import { getAllGroupPosts, createGroupPost, createPost } from '../post/post.api';
 import { createComment } from '../comment/comment.api';
 import { initialPost } from '../post/post';
 import { initialComment } from '../comment/comment';
-import RefreshIcon from '../../assets/images/refreshIcon.svg';
 import { selectGroup } from '../group/groupSlice';
 import { Post } from "../post/post"
 
 // components
 import SearchBar from '../search/SearchBar';
 import PostComponent from '../post/PostComponent'
-import SubmitComment from '../comment/SubmitComment';
-import SubmitPost from '../post/SubmitPost';
 
 
 function BookmarkedPosts({isGroup}: {isGroup: boolean}) {
@@ -37,7 +34,8 @@ function BookmarkedPosts({isGroup}: {isGroup: boolean}) {
         if (isGroup) {
             posts = await getAllGroupPosts(group.name);
         } else {
-            posts = await getAllBookmarksForAuthUser();
+            posts = await getBookmarksByAuthUser();
+            console.log(posts);
         }
 
         dispatch(update(posts));
@@ -77,28 +75,14 @@ function BookmarkedPosts({isGroup}: {isGroup: boolean}) {
 
     return (
         <div id="feedBody">
-          <SearchBar />
-          <div id="postColumn">
-            <div id="feedButtons"> 
+            <SearchBar />
+            <div id="postColumn">
+                <div id="feedButtons"> 
+                </div>
             </div>
-            <SubmitPost
-              setPost={setPost}
-              post={post}
-              dispatchPost={dispatchPost}
-              showModal={modalShowPost}
-              onHide={() => setModalShowPost(false)}
-            />
-            <SubmitComment
-              setComment={setComment}
-              comment={comment}
-              show={modalShowComment}
-              dispatchComment={dispatchComment}
-              onHide={() => setModalShowComment(false)}
-              postId={postId}
-            />
-            </div>
-            {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
-              post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
+            {posts.map((post) => (
+                <PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
+                post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
         </div>
       );
     }
