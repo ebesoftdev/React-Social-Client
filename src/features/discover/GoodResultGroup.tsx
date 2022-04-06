@@ -16,6 +16,7 @@ export default function GoodResultGroup({ user }: any) {
         setGroup(resp.data);
       }
     };
+    
     getGroupID()
   }, []);
 
@@ -31,17 +32,17 @@ export default function GoodResultGroup({ user }: any) {
     <div>
       <NavLink
         className='search-resultGroup'
-        to={"/group/" + group?.name}
-        key={group?.name}
+        to={"/group/" + user?.label}
+        key={group?.key?.name}
       >
-        <img className='profile-pic-mini' src={group?.profilePic}/>
-        {group?.name}&nbsp;&nbsp;
+        <img className='profile-pic-mini' src={group?.key?.profilePic}/>
+        {group?.key?.name}&nbsp;&nbsp;
         {user.label}
       </NavLink>
       <button type='button' className="follow-btn" onClick={handleClick}>
         FOLLOW
       </button>
-      <br key={group?.name + "1"}/>
+      <br key={group?.key?.name + "1"}/>
     </div>
   );
 }
