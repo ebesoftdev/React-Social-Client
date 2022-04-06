@@ -6,6 +6,7 @@ import { selectProfile, setProfile } from "./profileSlice";
 import { getProfile, getProfileById, checkProfileOwnership } from "./profile.api";
 import Image from 'react-bootstrap/Image'
 import { canFollow, followUser, getFollowers, unfollowUser } from "../follow/followers.api";
+import ListViewRenderProp from "./followerList";
 
 /*
     Welcome to the profile information page. 
@@ -152,6 +153,7 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
     //call flatlist view and give it the profile list
     getProfile()
     .then(res => { 
+                    //ListViewRenderProp(res.followers)
                     console.log(res);
                   })
     .catch(err => console.log(err))
@@ -167,7 +169,7 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
             <Card.Title id = "ProfileName">
               {profile.first_name} {profile.last_name} 
               <div>
-                <h6 id="followers-num">followers: {profile.follower_num}</h6>
+                <h6 id="followers-num" onClick={getListView}>followers: {profile.follower_num}</h6>
                 <h6 id="following-num">following: {profile.following_num}</h6>
                 {showFollowersButton ? <Button id="FollowersButton" onClick={getListView}>View Followers</Button> : <></>}
               </div>
