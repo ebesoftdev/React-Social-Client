@@ -1,5 +1,5 @@
 const profanityFilter = {
-  wordBank: ['darn', 'dang', 'freak', 'badonkadonk'], // "greek"
+  wordBank: ['darn', 'dang', 'freak', 'badonkadonk'],
   filter: function (string: string) {
     // if string contains word from wordBank, return false. Otherwise return true.
     string = string.toLowerCase();
