@@ -16,7 +16,7 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
     const initialLikes: number = 0;
     const [canLike, setCanLike] = useState(false);
     const [likes, setLikes] = useState(initialLikes);
-    const [canBookmark, setCanBookmark] = useState(true);
+    const [canBookmark, setCanBookmark] = useState(true); 
     const [authorProfile, setAuthorProfile] = useState<Profile>(initialProfile);
     const [commentAuthor, setCommentAuthor] = useState<Profile>(initialProfile);
 
@@ -25,6 +25,13 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
         getNumLikes(post.id)
             .then(
                 (data) => { setLikes(data) }
+            );
+    }
+
+    const updateCanBookmark = () => {
+        checkIfPostCanBeBookmarked(post.id)
+            .then(
+                (data) => { setCanBookmark(data); console.log(canBookmark);}
             );
     }
 
@@ -103,14 +110,11 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
     
     useEffect(() => {
         updateLikes();
+        updateCanBookmark();
         getPostAuthor();
         checkIfPostCanBeLiked(post.id).then(canLikeReturn => setCanLike(!canLikeReturn));
+        checkIfPostCanBeBookmarked(post.id).then(canBookmarkReturn => setCanBookmark(!canBookmarkReturn));
     }, [shouldUpdateLikes]); 
-
-    useEffect(() => {
-        const canBookmark = checkIfPostCanBeBookmarked(post.id);
-        console.log("canBookmark-->",canBookmark, post.id)
-    }, [])
 
     // Fetch the profile of the post's author to be linked
     
