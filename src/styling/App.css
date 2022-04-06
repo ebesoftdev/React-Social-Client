@@ -547,6 +547,16 @@ button {
   box-shadow: 0px 0px 4px var(--border-orange);
 }
 
+#reverbButton{
+  width: 10%;
+}
+
+#bookmarkButton{
+  width: 12%;
+  display: flex;
+  justify-content: space-between;
+}
+
 #postBtn,
 #refreshBtn {
   width: fit-content;
