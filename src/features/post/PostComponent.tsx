@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import { Post } from './post';
 import { checkIfPostCanBeLiked, getNumLikes, likePost, unlikePost } from "../like/likes.api";
+import { bookmarkPost, checkIfPostCanBeBookmarked, removeBookmark } from "../bookmark/bookmarks.api";
 import { Link } from "react-router-dom";
 import ReverbIcon from '../../assets/images/reverb_icon_final.png';
+import BookmarkIcon from '../../assets/images/bookmark_icon.png';
 import { formatYT } from "../../util/youtubeFunctions";
 import { getProfile, getProfileByAuthor, getProfileById } from "../profile/profile.api";
 import { Profile, initialProfile } from "../profile/profile";
@@ -14,6 +16,7 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
     const initialLikes: number = 0;
     const [canLike, setCanLike] = useState(false);
     const [likes, setLikes] = useState(initialLikes);
+    const [canBookmark, setCanBookmark] = useState(true);
     const [authorProfile, setAuthorProfile] = useState<Profile>(initialProfile);
     const [commentAuthor, setCommentAuthor] = useState<Profile>(initialProfile);
 
@@ -48,10 +51,31 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
             }).catch((e) => {
                 //unsuccessful
                 setCanLike(false);
-                // console.log(e)
+                console.log(e)
             })
         }
         
+    }
+
+
+    const addBookmark = () => {
+        bookmarkPost(post.id).then(async () => {
+            console.log("Bookmark added: ", post.id);
+            setCanBookmark(false);
+        }).catch((e)=>{
+            setCanBookmark(true);
+            console.log(e);
+        })
+    }
+
+    const deleteBookmark = () => {
+        removeBookmark(post.id).then(async () => {
+            console.log("Bookmark removed: ", post.id);
+            setCanBookmark(true);
+        }).catch((e)=>{
+            setCanBookmark(false);
+            console.log(e);
+        })
     }
 
     const getPostAuthor = () => {
@@ -83,6 +107,10 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
         checkIfPostCanBeLiked(post.id).then(canLikeReturn => setCanLike(!canLikeReturn));
     }, [shouldUpdateLikes]); 
 
+    useEffect(() => {
+        const canBookmark = checkIfPostCanBeBookmarked(post.id);
+        console.log("canBookmark-->",canBookmark, post.id)
+    }, [])
 
     // Fetch the profile of the post's author to be linked
     
@@ -108,6 +136,14 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
                 {/*To like the post*/}
                 <Button data-testid="reverbButton" id="reverbButton" onClick={() => likePostFunc()} variant="warning"
                     style={{ float: 'right', marginTop: "-2rem" }}>{likes}<img id="reverbIcon" src={ReverbIcon} alt="Click to Like!"/></Button>
+                
+                {canBookmark?
+                    <Button data-testid="bookmarkButton" id="bookmarkButton" onClick={addBookmark} variant="warning"
+                    style={{ float: 'right', marginTop: "-2rem", marginRight: "1rem" }}>add <img id="reverbIcon" src={BookmarkIcon} alt="Click to Bookmark!"/></Button>:
+                    <Button data-testid="bookmarkButton" id="bookmarkButton" onClick={deleteBookmark} variant="warning"
+                    style={{ float: 'right', marginTop: "-2rem", marginRight: "1rem" }}>remove <img id="reverbIcon" src={BookmarkIcon} alt="Click to Bookmark!"/></Button>   
+                }
+                
             </Card.Header>
             <Card.Body id="postBody">
                 {/*Sets the contents of a post. First by setting the embed. */}
