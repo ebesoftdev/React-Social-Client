@@ -35,21 +35,9 @@ const FollowingFeed = () => {
 
   util.updateAll = async () => {
     const posts = await getFollowingPosts();
-    // const posts = [{
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // }];
     
     dispatch(update(posts));
-
+    console.log("UPDATE ALL METHOD", posts);
     setShouldUpdateLikes([!shouldUpdateLikes[0]]); // :^);
     setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
@@ -74,18 +62,6 @@ const FollowingFeed = () => {
 
   util.dispatchPost = async () => {
     const createdPost = await createPost(post);
-    // const createdPost = {
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // };
     
     dispatch(add(createdPost));
   }
