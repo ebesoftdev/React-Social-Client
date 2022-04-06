@@ -35,9 +35,10 @@ const FollowingFeed = () => {
 
   util.updateAll = async () => {
     const posts = await getFollowingPosts();
+  
     
     dispatch(update(posts));
-    console.log("UPDATE ALL METHOD", posts);
+
     setShouldUpdateLikes([!shouldUpdateLikes[0]]); // :^);
     setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
@@ -62,7 +63,7 @@ const FollowingFeed = () => {
 
   util.dispatchPost = async () => {
     const createdPost = await createPost(post);
-    
+
     dispatch(add(createdPost));
   }
 
