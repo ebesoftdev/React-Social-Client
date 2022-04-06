@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Profile } from "./profile";
 import { updateProfile } from "./profile.api";
 import { store } from "../../app/store";
+import User from "../login/User";
 
 const initialState: {key: Profile} = {
     key: {
@@ -16,7 +17,8 @@ const initialState: {key: Profile} = {
       about_me: "",
       user_id:"",
       follower_num: 0,
-      following_num: 0
+      following_num: 0,
+      followers: []
     }
 }
 
@@ -24,6 +26,9 @@ const profileSlice = createSlice( {
     name: 'profile',
     initialState: initialState,
     reducers: {
+      setFollowers: (state, action) => {
+        state.key.followers = action.payload;
+      },
       setProfile: (state, action) => {
         state.key = action.payload;
       }
@@ -36,6 +41,6 @@ export const selectProfile = ( state: Rootstate ) =>
     return state.profile.key;
 }
 
-export const { setProfile } = profileSlice.actions;
+export const { setProfile, setFollowers } = profileSlice.actions;
 
 export default profileSlice.reducer;

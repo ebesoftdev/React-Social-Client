@@ -15,6 +15,7 @@ export const getUserFollowings = async (id: string): Promise<number> => {
 
 export const getFollowers = async (): Promise<User []> => {
     const {data} = await reverbClientWithAuth.get<User []>('/api/user/get-owner-followers');
+    console.log(data)
     return data;
 }
 

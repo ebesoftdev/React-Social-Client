@@ -1,3 +1,5 @@
+import User from "../login/User"
+
 export interface Profile {
 
   id: string,
@@ -11,7 +13,8 @@ export interface Profile {
   about_me: string,
   user_id: string,
   follower_num: number,
-  following_num: number
+  following_num: number,
+  followers: Array<User>
 }
 
 export const initialProfile = {
@@ -26,5 +29,6 @@ export const initialProfile = {
   about_me: '',
   user_id: '',
   follower_num: 0,
-  following_num: 0
+  following_num: 0,
+  followers: []
 }

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectProfile, setProfile } from "./profileSlice";
 import { getProfile, getProfileById, checkProfileOwnership } from "./profile.api";
 import Image from 'react-bootstrap/Image'
-import { canFollow, followUser, unfollowUser } from "../follow/followers.api";
+import { canFollow, followUser, getFollowers, unfollowUser } from "../follow/followers.api";
 
 /*
     Welcome to the profile information page. 
@@ -37,6 +37,9 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
           try {
             const profileRes = await getProfile();
             dispatch(setProfile(profileRes));
+            console.log(profileRes)
+
+
           } catch (err) {
             console.log(err);
           }
@@ -95,8 +98,15 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
         // Gets their profile from the stored profile for the user.
         
         getProfile()
-          .then(res => dispatch(setProfile(res)))
-          .catch(err => console.log(err));
+          .then(res => { 
+                          dispatch(setProfile(res)); 
+                          console.log(res);
+                        })
+          .catch(err => console.log(err))
+
+        //getFollowers()
+        //  .then(res => console.log(res))
+        //  .catch(err => console.log(err))
 
         // Show the edit button and hide the follow
         setShowEditButton(true); 
