@@ -15,6 +15,7 @@ import { canFollow, followUser, getFollowers, unfollowUser } from "../follow/fol
 export default function ProfileInformation({beep}: {beep: boolean}) {
   const [doneLoading, setDoneLoading] = useState(false);
   const [showEditButton, setShowEditButton] = useState(false);
+  const [showFollowersButton, setShowFollowersButton] = useState(false);
   const [showFollowButton, setShowFollowButton] = useState(false);
 
   const profile = useSelector(selectProfile);
@@ -109,6 +110,7 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
         //  .catch(err => console.log(err))
 
         // Show the edit button and hide the follow
+        setShowFollowersButton(true);
         setShowEditButton(true); 
         setShowFollowButton(false);
         
@@ -123,6 +125,7 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
         // Check if the profile is owned by the user who navigated into it.
         checkProfileOwnership(id).then((owns) => {
             // Set the buttons appropriately to the ownership rights.
+            setShowFollowersButton(true);
             setShowEditButton(owns);
             setShowFollowButton(!owns);
 
@@ -143,6 +146,17 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
   const goToEditProfile = () => {
     history.push("/editProfile");
   }
+
+  const getListView = () => {
+    //get profile list
+    //call flatlist view and give it the profile list
+    getProfile()
+    .then(res => { 
+                    console.log(res);
+                  })
+    .catch(err => console.log(err))
+  }
+
   return(
     doneLoading ? (
       <div>
@@ -155,6 +169,7 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
               <div>
                 <h6 id="followers-num">followers: {profile.follower_num}</h6>
                 <h6 id="following-num">following: {profile.following_num}</h6>
+                {showFollowersButton ? <Button id="FollowersButton" onClick={getListView}>View Followers</Button> : <></>}
               </div>
             </Card.Title>
             
