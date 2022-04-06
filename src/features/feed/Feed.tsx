@@ -53,6 +53,7 @@ function Feed({isGroup}: {isGroup: boolean}) {
     dispatch(update(posts));
       
     setShouldUpdateLikes([!shouldUpdateLikes[0]]);
+    setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
 
   const leavePost = () => {
