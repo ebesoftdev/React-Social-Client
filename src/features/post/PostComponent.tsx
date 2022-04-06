@@ -31,7 +31,7 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCa
     const updateCanBookmark = () => {
         checkIfPostCanBeBookmarked(post.id)
             .then(
-                (data) => { setCanBookmark(data); console.log(canBookmark);}
+                (data) => { setCanBookmark(data);}
             );
     }
 
