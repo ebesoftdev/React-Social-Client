@@ -4,6 +4,7 @@ import { store } from '../../app/store'
 const reverbClient = axios.create( {
   // baseURL: 'http://alreverb3staging-env.eba-r8euexa2.us-east-1.elasticbeanstalk.com',
   baseURL: 'http://localhost:5000',
+
   headers: {
     'Content-Type': 'application/json'
   },
@@ -12,6 +13,7 @@ const reverbClient = axios.create( {
 const reverbClientWithAuth = axios.create( {
   // baseURL: 'http://alreverb3staging-env.eba-r8euexa2.us-east-1.elasticbeanstalk.com',
   baseURL: 'http://localhost:5000',
+
   headers: {
     'Content-Type': 'application/json',
     'Authorization': ""
@@ -23,6 +25,7 @@ const reverbClientWithAuth = axios.create( {
 const reverbClientUploadFileWithAuth = axios.create( {
     // baseURL: 'http://alreverb3staging-env.eba-r8euexa2.us-east-1.elasticbeanstalk.com',
     baseURL: 'http://localhost:5000',
+
     headers: {
       "Content-Type": "multipart/form-data; boundary=<calculated when request is sent>",
       'Authorization': ""

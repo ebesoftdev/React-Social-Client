@@ -1,25 +1,27 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import Feed from "../features/feed/Feed";
-import Login from "../features/login/Login";
-import Register from "../features/register/Register";
-import Landing from "../features/landing/Landing";
+import { Switch, Route, Redirect } from "react-router-dom";
+
 import { useAppDispatch } from "../app/hooks";
 import { logout } from '../features/login/authSlice'
+
+// components
 import ProfilePage from "../features/profile/ProfilePage";
 import EditProfilePage from "../features/profile/EditProfilePage";
+import {CreateGroupPage} from "../features/group/CreateGroupPage";
 import GroupPage from "../features/group/GroupPage";
-import { CreateGroupPage } from "../features/group/CreateGroupPage";
-import { EditGroupPage } from "../features/group/EditGroupPage"
-import FollowingFeed from "../features/feed/FollowingFeed";
+import {EditGroupPage} from "../features/group/EditGroupPage"
 import PersonalFeed from "../features/feed/PersonalFeed";
 import Discover from "../features/discover/Discover";
+import FollowingFeed from "../features/feed/FollowingFeed";
+import Feed from "../features/feed/Feed";
+import Register from "../features/register/Register";
+import Login from "../features/login/Login";
+import Landing from "../features/landing/Landing";
 
 interface MainRouterProps{
   loggedIn:string
 }
 
-const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
+const MainRouter= ({loggedIn}: MainRouterProps) => {
   const dispatch = useAppDispatch();
 
   // Logout now dispatching to store to update state
@@ -29,38 +31,37 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
 
   // Login is now handled in the Login page component.
 
-  let toReturn = <></>;
   if (loggedIn) {
-    toReturn =
+    return (
       <div id="container-to-remove">
         <Switch>
           <Redirect from="/user_profile/:id" to='/profile/:id'/>
           <Route path="/profile/:id">
-            <ProfilePage beep={false}/>
+            <ProfilePage beep={false} />
           </Route>
           <Route path="/profile">
-            <ProfilePage beep={true}/>
+            <ProfilePage beep={true} />
           </Route>
           <Route path="/editProfile">
-            <EditProfilePage/>
+            <EditProfilePage />
           </Route>
           <Route path="/createGroup">
-            <CreateGroupPage/>
+            <CreateGroupPage />
           </Route>
           <Route path="/group/:groupName">
-            <GroupPage/>
+            <GroupPage />
           </Route>
           <Route path="/editGroup/:groupName">
-            <EditGroupPage/>
+            <EditGroupPage />
           </Route>
           <Route path="/logout">
             {doLogout}
           </Route>
           <Route path="/feed/personal">
-            <PersonalFeed/>
+            <PersonalFeed />
           </Route>
           <Route path="/feed/following">
-            <FollowingFeed/>
+            <FollowingFeed />
           </Route>
           <Route path="/feed">
             <Feed isGroup={false}/>
@@ -69,10 +70,10 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
             <Discover isGroup={false}/>
           </Route>
         </Switch>
-      </div>
+      </div> )
   }
   else {
-    toReturn =
+    return (
       <div>
         <Switch>
           <Route path="/register">
@@ -85,13 +86,8 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
             <Landing />
           </Route>
         </Switch>
-      </div>
+      </div> )
   }
-  return (
-    <>
-      {toReturn}
-    </>
-  )
 }
 
 export default MainRouter

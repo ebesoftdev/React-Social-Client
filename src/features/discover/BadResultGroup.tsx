@@ -1,3 +1,3 @@
 export default function BadResultGroup() {
-  return (<div className='search-result'>No Groups Found</div>);
+  return (<div className='search-resultGroup'>No Groups Found</div>);
 }

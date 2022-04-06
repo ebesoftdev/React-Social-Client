@@ -16,10 +16,7 @@ export default function GoodResultGroup({ user }: any) {
         setGroup(resp.data);
       }
     };
-    console.log(group);
-    getGroupID();
-    console.log(group);
-    
+    getGroupID()
   }, []);
 
   const handleClick = () => {
