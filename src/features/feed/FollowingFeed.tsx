@@ -31,6 +31,7 @@ const FollowingFeed = () => {
   const [postId, setPostId] = useState(0);
 
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
+  const [shouldUpdateCanBookmark, setShouldUpdateCanBookmark] = useState([false]);
 
   util.updateAll = async () => {
     const posts = await getFollowingPosts();
@@ -50,6 +51,7 @@ const FollowingFeed = () => {
     dispatch(update(posts));
 
     setShouldUpdateLikes([!shouldUpdateLikes[0]]); // :^);
+    setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
 
   const [comment, setComment] = useState(initialComment);
@@ -115,7 +117,7 @@ const FollowingFeed = () => {
         />
         
       </div>
-      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
+      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
           post={post} leaveComment={util.leaveComment} key={post.id} />)).reverse()}
     </div>
   );
