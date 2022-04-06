@@ -15,12 +15,12 @@ export const removeBookmark = async (postId: string) => {
     reverbClientWithAuth.delete<void>('api/bookmark/remove-bookmark/'+postId)
 }
 
-export const checkIfPostCanBeBookmarked = async (postId:string)=> {
+export const checkIfPostCanBeBookmarked = async (postId: string)=> {
     const { data: canBookmark } = await reverbClientWithAuth.get<boolean>('api/bookmark/check-if-bookmarked/'+ postId);
     return canBookmark;
 }
 
-export const getAllBookmarksForAuthUser = async () =>{
-    const { data } = await reverbClientWithAuth.get<Array<Bookmarks>>('api/bookmark/get-all-bookmarks');
+export const getBookmarksByAuthUser = async () =>{
+    const { data } = await reverbClientWithAuth.get<Bookmarks[]>('api/bookmark/get-all-bookmarks');
     return data;
 }
