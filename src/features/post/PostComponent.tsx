@@ -10,8 +10,8 @@ import { formatYT } from "../../util/youtubeFunctions";
 import { getProfile, getProfileByAuthor, getProfileById } from "../profile/profile.api";
 import { Profile, initialProfile } from "../profile/profile";
 
-const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }: 
-    { shouldUpdateLikes: boolean[], post: Post, leaveComment: any }) =>  {
+const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCanBookmark }: 
+    { shouldUpdateLikes: boolean[], post: Post, leaveComment: any, shouldUpdateCanBookmark: boolean[] }) =>  {
 
     const initialLikes: number = 0;
     const [canLike, setCanLike] = useState(false);
@@ -114,7 +114,7 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
         getPostAuthor();
         checkIfPostCanBeLiked(post.id).then(canLikeReturn => setCanLike(!canLikeReturn));
         checkIfPostCanBeBookmarked(post.id).then(canBookmarkReturn => setCanBookmark(!canBookmarkReturn));
-    }, [shouldUpdateLikes]); 
+    }, [shouldUpdateLikes, shouldUpdateCanBookmark]); 
 
     // Fetch the profile of the post's author to be linked
     
