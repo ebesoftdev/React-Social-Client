@@ -257,6 +257,15 @@ h3 {
   color: var(--text-primary-hover);
 }
 
+.search-resultGroup {
+  color: var(--text-primary);
+}
+
+.search-resultGroup:hover {
+  color: var(--text-primary-hover);
+}
+
+
 .profile-pic-mini {
   height: 35px;
   width: 35px;
@@ -665,7 +674,7 @@ body,
 .navbar-link, .navbar-link:hover, #theme-button, #theme-button:hover,
 #postBtn, #postBtn:hover,
 #refreshBtn, #refreshBtn:hover,
-.search-result, .search-result:hover,
+.search-result, .search-result:hover, .search-resultGroup, .search-result:hover
 #search-results,
 #submitCommentBtn, #submitCommentBtn:hover,
 #submitPostBtn, #submitPostBtn:hover,

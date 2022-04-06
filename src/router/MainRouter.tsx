@@ -13,6 +13,7 @@ import { CreateGroupPage } from "../features/group/CreateGroupPage";
 import { EditGroupPage } from "../features/group/EditGroupPage"
 import FollowingFeed from "../features/feed/FollowingFeed";
 import PersonalFeed from "../features/feed/PersonalFeed";
+import Discover from "../features/discover/Discover";
 
 interface MainRouterProps{
   loggedIn:string
@@ -63,6 +64,9 @@ const MainRouter:React.FC<MainRouterProps> = ({loggedIn}:{loggedIn:string}) => {
           </Route>
           <Route path="/feed">
             <Feed isGroup={false}/>
+          </Route>
+          <Route path="/discover">
+            <Discover isGroup={false}/>
           </Route>
         </Switch>
       </div>
