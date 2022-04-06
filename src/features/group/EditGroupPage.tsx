@@ -1,24 +1,26 @@
-import { Grid } from "@material-ui/core";
 import { useEffect, useState } from "react";
+import { Grid } from "@material-ui/core";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
-import { createGroup, editGroup } from "./Group.api";
+import { editGroup } from "./Group.api";
 import UpdateGroupRequest from "./dtos/UpdateGroupRequest";
 import { useSelector } from "react-redux";
 import { selectGroup } from "./groupSlice";
+
+// components
 import DeleteGroup from "./DeleteGroup";
 
-export function EditGroupPage() {
-
-    const history = useHistory();
+export default function EditGroupPage() {
     const [newGroupName, setGroupName] = useState("");
     const [groupDescription, setGroupDescription] = useState("");
     const [groupProfilePic, setGroupProfilePic] = useState("");
     const [groupHeaderImg, setGroupHeaderImg] = useState("");
-    const { groupName } = useParams();
-    const group = useSelector(selectGroup);
     const [showDelete, setShowDelete] = useState(false);
-    console.log(groupName);
+
+    const group = useSelector(selectGroup);
+
+    const { groupName } = useParams();
+    const history = useHistory();
 
     const handleChangeName = (e: any) => {
         setGroupName(e.target.value);
@@ -99,7 +101,6 @@ export function EditGroupPage() {
                 </Card>
             </Grid>
             <DeleteGroup
-                show={showDelete}
                 onHide={() => setShowDelete(false)}
                 groupName={group.name}
             />

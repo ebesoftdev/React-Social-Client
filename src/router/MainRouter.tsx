@@ -6,9 +6,9 @@ import { logout } from '../features/login/authSlice'
 // components
 import ProfilePage from "../features/profile/ProfilePage";
 import EditProfilePage from "../features/profile/EditProfilePage";
-import {CreateGroupPage} from "../features/group/CreateGroupPage";
+import CreateGroupPage from "../features/group/CreateGroupPage";
 import GroupPage from "../features/group/GroupPage";
-import {EditGroupPage} from "../features/group/EditGroupPage"
+import EditGroupPage from "../features/group/EditGroupPage"
 import PersonalFeed from "../features/feed/PersonalFeed";
 import Discover from "../features/discover/Discover";
 import FollowingFeed from "../features/feed/FollowingFeed";

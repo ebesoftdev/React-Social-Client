@@ -1,51 +1,38 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { User } from "firebase/auth";
+import {createSlice } from "@reduxjs/toolkit";
 import { RootState, store } from "../../app/store";
-import { setTokenAsync } from "../login/authSlice";
 import { Group } from "./Group"
 import { getGroupByName } from "./Group.api";
 
-
 const initialState: Group = {
+  key: {
     groupID: '',
     owner : {
-        id: '',
-        email: ''
+      id: '',
+      email: ''
     },
     name : '',
     description : '',
     headerImg : '',
     profilePic : '',
     joinedUsers : []
+  }
 };
-
-export const setGroupAsync = createAsyncThunk<Group, string>(
-    'group/get/async',
-    async (groupName: string, thunkAPI) => {
-        try {
-            console.log("Calling API for group")
-            return await getGroupByName(groupName);
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error);
-        }
-    }
-);
 
 const GroupSlice = createSlice({
     name: "group",
     initialState: initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(setGroupAsync.fulfilled, (state, action) => {
-            return action.payload;
-        })
-    }
-
-})
+    reducers: {
+      setGroup: (state, action) => {
+        state.key = action.payload
+      }
+    },
+});
 
 type Rootstate = ReturnType<typeof store.getState>;
-
 export default GroupSlice.reducer;
+
+export const { setGroup } = GroupSlice.actions;
+
 export const selectGroup = (state: RootState) => {
-    return state.group;
+    return state.group.key;
 }

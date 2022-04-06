@@ -1,12 +1,12 @@
-import { useRef } from 'react'
-import { Form, Button, Card } from 'react-bootstrap'
-import { Container, Row, Col } from 'react-bootstrap'
-import { useAppDispatch } from '../../app/hooks'
-import { setTokenAsync } from './authSlice'
-import { reverbClientWithAuth } from '../../remote/reverb-api/reverbClient'
-import { setUserAsync } from './userSlice'
-import { useHistory } from 'react-router-dom'
-import { getIdToken } from 'firebase/auth'
+import { useRef } from 'react';
+import { Form, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useAppDispatch } from '../../app/hooks';
+import { getToken } from './token.api';
+import { getUser } from './Login.api';
+import { login } from './authSlice';
+import { updateUser } from './userSlice';
+import { useHistory } from 'react-router-dom';
 
 export let util = {loginAccount: (event: any) => {}};
 
@@ -26,11 +26,26 @@ export default function Login() {
       const email: string = emailRef.current.value;
       const password: string = passwordRef.current.value;
 
-      // Token is set to store on login
-      await dispatch(setTokenAsync({ email, password }));
-      await dispatch(setUserAsync({}));
-      history.push("/feed")
+      try {
+        const tokenObj = await getToken(email, password);
+        dispatch(login(tokenObj.token));
 
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
+        const userObj = await getUser();
+        // const userObj = {
+        //   id: "123445",
+        //   email
+        // };
+        dispatch(updateUser(userObj));
+        history.push("/feed");
+
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 

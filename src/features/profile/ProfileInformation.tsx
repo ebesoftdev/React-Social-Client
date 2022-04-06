@@ -2,31 +2,26 @@ import { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfileAsync, getProfileByIdAsync, selectProfile } from "./profileSlice";
-import { checkProfileOwnership } from "./profile.api";
+import { selectProfile, setProfile } from "./profileSlice";
+import { getProfile, getProfileById, checkProfileOwnership } from "./profile.api";
 import Image from 'react-bootstrap/Image'
-import { canFollow, followUser, getUserFollowers, getUserFollowings, getUserIdFromProfileId, unfollowUser } from "../follow/followers.api";
-import React from "react";
-
+import { canFollow, followUser, unfollowUser } from "../follow/followers.api";
 
 /*
     Welcome to the profile information page. 
     This page controls the profiles that appear when you click on a user's name in comments or posts.
 
 */
-export default function ProfileInformation(props: any) {
+export default function ProfileInformation({beep}: {beep: boolean}) {
   const [doneLoading, setDoneLoading] = useState(false);
+  const [showEditButton, setShowEditButton] = useState(false);
+  const [showFollowButton, setShowFollowButton] = useState(false);
+
   const profile = useSelector(selectProfile);
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const [showEditButton, setShowEditButton] = useState(false);
-
-  //attempting follow button hide
-  //added followbutton state similar to showEd
-  const [showFollowButton, setShowFollowButton] = useState(false);
   
-
   // Initial states for our constants
   let initialFollowState = false;
 
@@ -38,10 +33,25 @@ export default function ProfileInformation(props: any) {
     if (id === undefined)
     {
         // After a delay, get the profile of the current user.
-        setTimeout(() => dispatch(getProfileAsync(profile)), 100);
+        setTimeout(async () => {
+          try {
+            const profileRes = await getProfile();
+            dispatch(setProfile(profileRes));
+          } catch (err) {
+            console.log(err);
+          }
+        }, 100);
     }
+    
     // After a delay, get the profile of a user from a given ID.
-    else setTimeout(() => dispatch(getProfileByIdAsync(id)), 100);
+    else setTimeout(async () => {
+      try {
+        const profileRes = await getProfileById(id);
+        dispatch(setProfile(profileRes));
+      } catch (err) {
+        console.log(err);
+      }
+    }, 100);
   }
 
 
@@ -83,7 +93,10 @@ export default function ProfileInformation(props: any) {
     if(id === undefined) { // If there's no id in the path variable then we go to the logged in user's profile
 
         // Gets their profile from the stored profile for the user.
-        dispatch(getProfileAsync(profile)); 
+        
+        getProfile()
+          .then(res => dispatch(setProfile(res)))
+          .catch(err => console.log(err));
 
         // Show the edit button and hide the follow
         setShowEditButton(true); 
@@ -93,7 +106,9 @@ export default function ProfileInformation(props: any) {
         setTimeout(() => setDoneLoading(true), 200);
     } else { // If there is an id in the path, then we load the corrosponding profile.
         // Make an api call for the appropriate profile
-        dispatch(getProfileByIdAsync(id));
+        getProfileById(id)
+          .then(res => dispatch(setProfile(res)))
+          .catch(err => console.log(err));
 
         // Check if the profile is owned by the user who navigated into it.
         checkProfileOwnership(id).then((owns) => {
@@ -113,8 +128,7 @@ export default function ProfileInformation(props: any) {
             setTimeout(() => setDoneLoading(true), 300);
         })
     }
-    
-  }, [props.beep]); // beep beep :^) (Not sure why this is here. Possibly some sort of ownership parsing?)
+  }, [beep]);
 
   const goToEditProfile = () => {
     history.push("/editProfile");

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import { Post } from './post';
 import { checkIfPostCanBeLiked, getNumLikes, likePost, unlikePost } from "../like/likes.api";
@@ -6,19 +6,16 @@ import { Link } from "react-router-dom";
 import ReverbIcon from '../../assets/images/reverb_icon_final.png';
 import { formatYT } from "../../util/youtubeFunctions";
 import { getProfile, getProfileByAuthor, getProfileById } from "../profile/profile.api";
-import { initialProfile, Profile } from "../profile/profile";
-import { getProfileByIdAsync } from "../profile/profileSlice";
-import { async } from "@firebase/util";
+import { Profile, initialProfile } from "../profile/profile";
 
-
-const PostComponent =  ({ shouldUpdateLikes, post, leaveComment }: 
+const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }: 
     { shouldUpdateLikes: boolean[], post: Post, leaveComment: any }) =>  {
 
     const initialLikes: number = 0;
-    const [canLike, setCanLike] = React.useState(false);
-    const [likes, setLikes] = React.useState(initialLikes);
-    const [authorProfile, setAuthorProfile] = React.useState(initialProfile);
-    const [commentAuthor, setCommentAuthor] = React.useState(initialProfile);
+    const [canLike, setCanLike] = useState(false);
+    const [likes, setLikes] = useState(initialLikes);
+    const [authorProfile, setAuthorProfile] = useState<Profile>(initialProfile);
+    const [commentAuthor, setCommentAuthor] = useState<Profile>(initialProfile);
 
     const updateLikes = () => {
         // console.log("Calling backend to update likes on post " + post.id);
@@ -123,7 +120,7 @@ const PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
             
             <ListGroup id="commentBody" className="list-group-flush" >
                 
-                {post.comments.map((comment, idx) => {
+                {post.comments && post.comments.map((comment, idx) => {
 
                     return (
                     <ListGroupItem key={idx}>

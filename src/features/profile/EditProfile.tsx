@@ -1,43 +1,50 @@
 import { Grid } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getProfileAsync, selectProfile, updateProfileAsync } from './profileSlice';
+import { Profile } from "./profile";
+import { selectProfile, setProfile } from './profileSlice';
+import { getProfile, updateProfile } from "./profile.api";
 import Upload_Picture from './UploadPicture';
 
-export let util = { update: (e: any) => { }, cancel: (e: any) => { } };
+export let util = { update: (e: SyntheticEvent) => { }, cancel: (e: SyntheticEvent) => { } };
 
 export default function EditProfile() {
-    useEffect(() => {
-        dispatch(getProfileAsync(profile));
-    }, []);
-
     const profile = useSelector(selectProfile);
+    const [input, setInput] = useState(profile);
+  
     const dispatch = useDispatch();
-
     const history = useHistory();
 
+    useEffect(() => {
+      getProfile()
+        .then((profile: Profile) => dispatch(setProfile(profile)))
+        .catch(err => console.log(err));
+    }, []);
 
-
-    const [input, setInput] = useState(profile);
-
-    const handleChange = (e: any) => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        });
+    const handleChange = (e: SyntheticEvent) => {
+      const target = e.target as HTMLInputElement;
+      setInput({
+          ...input,
+          [target.name]: target.value
+      });
     };
 
-
-    util.update = (e: any) => {
+    util.update = async (e: SyntheticEvent) => {
         e.preventDefault();
-        // console.log('editProfile' + JSON.stringify(input));
-        dispatch(updateProfileAsync(input));
-        history.push('/profile');
+        
+        try {
+          const updatedProfile = await updateProfile(input);
+        //   const updatedProfile = input;
+          dispatch(setProfile(updatedProfile));
+          history.push('/profile');
+        } catch (err) {
+          console.log(err);
+        }
     }
 
-    util.cancel = (e: any) => {
+    util.cancel = (e: SyntheticEvent) => {
         e.preventDefault();
         history.push('/profile');
     }
@@ -118,7 +125,6 @@ export default function EditProfile() {
             </Grid>
         </div>
     )
-
 }
 
 

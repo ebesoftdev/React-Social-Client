@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import SubmitPost from '../post/SubmitPost';
-import { getPersonalPostsAsync, postPostAsync, selectPosts } from '../post/postSlice';
+import { selectPosts, add, update } from '../post/postSlice';
+import { getPersonalPosts, createPost } from '../post/post.api';
 import PostComponent from '../post/PostComponent';
 import SubmitComment from '../comment/SubmitComment';
 import { createComment } from '../comment/comment.api';
@@ -31,10 +32,24 @@ const PersonalFeed = () => {
 
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
 
-  util.updateAll = () => {
-    dispatch(getPersonalPostsAsync({}));
-    setShouldUpdateLikes([!shouldUpdateLikes[0]]); // :^);
-    // console.log("Updated feed");
+  util.updateAll = async () => {
+    const posts = await getPersonalPosts();
+    // const posts = [{
+    //   id: "123445",
+    //   title: "title",
+    //   postText: "some text here",
+    //   contentLink: "",
+    //   contentType: "",
+    //   date: new Date(),
+    //   comments: [],
+    //   authorID: "Aidan",
+    //   groupID: "",
+    //   groupName: ""
+    // }];
+    
+    dispatch(update(posts));
+
+    setShouldUpdateLikes([!shouldUpdateLikes[0]]);
   }
 
   const [comment, setComment] = useState(initialComment);
@@ -55,8 +70,22 @@ const PersonalFeed = () => {
     createComment(postId, comment).then(() => util.updateAll());
   }
 
-  util.dispatchPost = () => {
-    dispatch(postPostAsync(post));
+  util.dispatchPost = async () => {
+    const createdPost = await createPost(post);
+    // const createdPost = {
+    //   id: "123445",
+    //   title: "title",
+    //   postText: "some text here",
+    //   contentLink: "",
+    //   contentType: "",
+    //   date: new Date(),
+    //   comments: [],
+    //   authorID: "Aidan",
+    //   groupID: "",
+    //   groupName: ""
+    // };
+    
+    dispatch(add(createdPost));
   }
 
   useEffect(() => {
@@ -79,7 +108,7 @@ const PersonalFeed = () => {
           setPost={setPost}
           post={post}
           dispatchPost={util.dispatchPost}
-          show={modalShowPost}
+          showModal={modalShowPost}
           onHide={() => setModalShowPost(false)}
         />
         <SubmitComment

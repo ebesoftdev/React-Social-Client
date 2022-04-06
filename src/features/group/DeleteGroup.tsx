@@ -1,25 +1,24 @@
-import React from "react";
-import {Button, Col, Form, Modal, Row} from "react-bootstrap";
-import { propTypes } from "react-bootstrap/esm/Image";
-import { useDispatch, useSelector } from "react-redux";
+import {Button, Form, Modal} from "react-bootstrap";
+import { useDispatch} from "react-redux";
 import { useHistory } from "react-router-dom";
-import { selectPosts } from "../post/postSlice";
 import { deleteGroup } from "./Group.api";
 import { clear } from "../post/postSlice"
+import { SyntheticEvent } from "react";
 
-export default function DeleteGroup(props: any) {
-    const history = useHistory();
-    const posts = useSelector(selectPosts);
+interface Props {groupName: string, onHide: (e: SyntheticEvent) => void}
+
+export default function DeleteGroup({groupName, onHide}: Props) {
     const dispatch = useDispatch();
 
-    function removeGroup(groupName: string, hide: any) {
+    const history = useHistory();
+
+    function removeGroup(groupName: string) {
         dispatch(clear())
         deleteGroup(groupName).then(() => {history.push('/feed')});
     }
 
     return (
         <Modal
-            {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -31,15 +30,14 @@ export default function DeleteGroup(props: any) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                Click on confirm to delete the group {props.groupName}
+                Click on confirm to delete the group {groupName}
             </Modal.Body>
             <Modal.Footer>
             <Form>
-                    <Button variant="primary" id="confirmDelete" type="button" onClick={() => removeGroup(props.groupName, props.onHide)}>Confirm</Button>
-                    <Button variant="secondary" id="cancelDelete" type="button" onClick={() => props.onHide()}>Cancel</Button>
+                    <Button variant="primary" id="confirmDelete" type="button" onClick={() => removeGroup(groupName)}>Confirm</Button>
+                    <Button variant="secondary" id="cancelDelete" type="button" onClick={(e) => onHide(e)}>Cancel</Button>
                 </Form>
             </Modal.Footer>
         </Modal>
     );
-
 }
