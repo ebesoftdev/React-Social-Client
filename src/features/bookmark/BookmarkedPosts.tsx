@@ -13,12 +13,12 @@ import { Post } from "../post/post"
 // components
 import SearchBar from '../search/SearchBar';
 import PostComponent from '../post/PostComponent'
+import SubmitComment from '../comment/SubmitComment';
 
 
 function BookmarkedPosts({isGroup}: {isGroup: boolean}) {
     const [comment, setComment] = useState(initialComment);
     const [post, setPost] = useState(initialPost);
-    const [modalShowPost, setModalShowPost] = useState(false);
     const [modalShowComment, setModalShowComment] = useState(false);
     const [postId, setPostId] = useState(0);
     const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
@@ -35,11 +35,8 @@ function BookmarkedPosts({isGroup}: {isGroup: boolean}) {
             posts = await getAllGroupPosts(group.name);
         } else {
             posts = await getBookmarksByAuthUser();
-            console.log(posts);
         }
-
         dispatch(update(posts));
-      
         setShouldUpdateLikes([!shouldUpdateLikes[0]]);
         setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
     }
@@ -80,6 +77,15 @@ function BookmarkedPosts({isGroup}: {isGroup: boolean}) {
                 <div id="feedButtons"> 
                 </div>
             </div>
+            <SubmitComment
+                setComment={setComment}
+                comment={comment}
+                show={modalShowComment}
+                dispatchComment={dispatchComment}
+                onHide={() => setModalShowComment(false)}
+                postId={postId}
+            />
+
             {posts.map((post) => (
                 <PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
                 post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
