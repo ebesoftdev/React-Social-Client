@@ -31,7 +31,7 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCa
     const updateCanBookmark = () => {
         checkIfPostCanBeBookmarked(post.id)
             .then(
-                (data) => { console.log(post.id); setCanBookmark(data);}
+                (data) => { setCanBookmark(data);}
             );
     }
 
@@ -139,13 +139,13 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCa
                 <Card.Text id = "postTime">{"" + new Date(post.date + 'Z').toLocaleString() }</Card.Text>
                 {/*To like the post*/}
                 <Button data-testid="reverbButton" id="reverbButton" onClick={() => likePostFunc()} variant="warning"
-                    style={{ float: 'right', marginTop: "-2rem" }}>{likes}<img id="reverbIcon" src={ReverbIcon} alt="Click to Like!"/></Button>
+                    style={{ float: 'right', marginTop: "-2rem", fontSize:"20px" }}>{likes}<img id="reverbIcon" src={ReverbIcon} alt="Click to Like!"/></Button>
                 
                 {canBookmark?
                     <Button data-testid="bookmarkButton" id="bookmarkButton" onClick={addBookmark} variant="warning"
-                    style={{ float: 'right', marginTop: "-2rem", marginRight: "1rem" }}>add <img id="reverbIcon" src={BookmarkIcon} alt="Click to Bookmark!"/></Button>:
+                    style={{ float: 'right', marginTop: "-2rem", marginRight: "1rem"}}><i style={{fontSize:"20px"}} className="bi bi-bookmark-plus"></i></Button>:
                     <Button data-testid="bookmarkButton" id="bookmarkButton" onClick={deleteBookmark} variant="warning"
-                    style={{ float: 'right', marginTop: "-2rem", marginRight: "1rem" }}>remove <img id="reverbIcon" src={BookmarkIcon} alt="Click to Bookmark!"/></Button>   
+                    style={{ float: 'right', marginTop: "-2rem", marginRight: "1rem" }}><i style={{fontSize:"20px"}} className="bi bi-bookmark-check"></i></Button>   
                 }
                 
             </Card.Header>
