@@ -13,6 +13,7 @@ export default function GoodResultGroup({ user }: any) {
         const resp = await reverbClientWithAuth.get(`/api/group/${user.label}`);
         console.log(resp);
         
+        console.log(resp.data);
         setGroup(resp.data);
       }
     };
