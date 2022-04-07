@@ -29,6 +29,9 @@ const profileSlice = createSlice( {
       setFollowers: (state, action) => {
         state.key.followers = action.payload;
       },
+      update: (state, action) => {
+        state.key = action.payload;
+      },
       setProfile: (state, action) => {
         state.key = action.payload;
       }
@@ -41,6 +44,6 @@ export const selectProfile = ( state: Rootstate ) =>
     return state.profile.key;
 }
 
-export const { setProfile, setFollowers } = profileSlice.actions;
+export const { setProfile, setFollowers, update } = profileSlice.actions;
 
 export default profileSlice.reducer;

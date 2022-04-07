@@ -15,6 +15,7 @@ import Feed from "../features/feed/Feed";
 import Register from "../features/register/Register";
 import Login from "../features/login/Login";
 import Landing from "../features/landing/Landing";
+import AllFollowers from "../features/profile/AllFollowers"
 
 interface MainRouterProps{
   loggedIn:string
@@ -40,6 +41,9 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           </Route>
           <Route path="/profile">
             <ProfilePage beep={true} />
+          </Route>
+          <Route path="/Followers">
+            <AllFollowers />
           </Route>
           <Route path="/editProfile">
             <EditProfilePage />

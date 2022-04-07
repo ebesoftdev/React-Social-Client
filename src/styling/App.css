@@ -433,10 +433,19 @@ h3 {
   float: right;
 }
 
+#followers-num:hover {
+  cursor: pointer;
+  opacity: .75;
+}
+
 #followers-num {
   margin-top: -5%;
   padding-right: 10px;
   float: right;
+}
+
+.follower-email {
+  display: block;
 }
 
 /* EDIT PROFILE */
