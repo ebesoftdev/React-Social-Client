@@ -1,7 +1,6 @@
 import User from "../login/User";
 
 export interface Group {
-  key: {
     groupID: string
     owner : User
     name : string
@@ -9,5 +8,4 @@ export interface Group {
     headerImg : string
     profilePic : string
     joinedUsers : User[]
-  }
 }
