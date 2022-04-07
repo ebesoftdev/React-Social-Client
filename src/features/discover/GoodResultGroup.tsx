@@ -2,18 +2,25 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { reverbClientWithAuth } from "../../remote/reverb-api/reverbClient";
 import { Group } from '../group/Group';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectGroup, setGroup } from '../group/groupSlice';
 
 export default function GoodResultGroup({ user }: any) {
-  
-  const [ group, setGroup ] = useState<Group>();
+  const groupState = useSelector(selectGroup);
+  const [ group, setGroupLocal ] = useState<Group>(groupState);
+
+  const dispatch = useDispatch();
 
   useEffect(() => { 
     const getGroupID = async () => {
       if (!group) {
         const resp = await reverbClientWithAuth.get(`/api/group/${user.label}`);
-        console.log(resp);
         
-        setGroup(resp.data);
+        console.log(resp);
+        console.log(resp.data);
+
+        dispatch(setGroup(resp.data));
+        setGroupLocal(groupState);
       }
     };
     
@@ -33,16 +40,16 @@ export default function GoodResultGroup({ user }: any) {
       <NavLink
         className='search-resultGroup'
         to={"/group/" + user?.label}
-        key={group?.key?.name}
+        key={group.name}
       >
-        <img className='profile-pic-mini' src={group?.key?.profilePic}/>
-        {group?.key?.name}&nbsp;&nbsp;
+        <img className='profile-pic-mini' src={group.profilePic}/>
+        {group.name}&nbsp;&nbsp;
         {user.label}
       </NavLink>
       <button type='button' className="follow-btn" onClick={handleClick}>
         FOLLOW
       </button>
-      <br key={group?.key?.name + "1"}/>
+      <br key={group.name + "1"}/>
     </div>
   );
 }

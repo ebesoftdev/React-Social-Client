@@ -3,7 +3,7 @@ import { RootState, store } from "../../app/store";
 import { Group } from "./Group"
 import { getGroupByName } from "./Group.api";
 
-const initialState: Group = {
+const initialState: {key: Group} = {
   key: {
     groupID: '',
     owner : {
