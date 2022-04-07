@@ -1,13 +1,14 @@
+import SearchResult from '../search/SearchResult';
+
+// components
 import GoodResultGroup from './GoodResultGroup';
 import BadResultGroup from './BadResultGroup';
 
-export default function ResultsListGroup({ results }:any) {
+export default function ResultsListGroup({ results }: {results: SearchResult[]}) {
   if (results.length) {
     return (
       <div className='results-list'>
-        {
-          results.map((result: any) => <GoodResultGroup user={result} />)
-        }
+        <GoodResultGroup results={results} />
       </div>
     );
   }
