@@ -448,6 +448,25 @@ h3 {
   display: block;
 }
 
+.followerCardContainer{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 70vw;
+  color: black;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.followerCard{
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 90%;
+  background-color: #464b50;
+  color: whitesmoke;
+}
+
 /* EDIT PROFILE */
 
 #editCol2 {
