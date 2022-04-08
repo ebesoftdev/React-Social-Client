@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPosts, add, update } from '../post/postSlice';
-import PostComponent from '../post/PostComponent'
 import { createComment } from '../comment/comment.api';
 import { initialPost } from '../post/post';
 import { initialComment } from '../comment/comment';
 import { selectGroup } from '../group/groupSlice';
 import { Post } from "../post/post"
-import SearchBarGroup from './SearchBarGroup';
 import { getAllGroupPosts, getAllPosts, createGroupPost, createPost } from '../post/post.api';
+
+// components
+import SearchBarGroup from './SearchBarGroup';
+import PostComponent from '../post/PostComponent'
+import SubmitComment from '../comment/SubmitComment';
 
 
 function Discover({isGroup}: {isGroup: boolean}) {
@@ -31,27 +34,10 @@ function Discover({isGroup}: {isGroup: boolean}) {
     } else {
        posts = await getAllPosts();
     }
-    // posts = [{
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // }];
     
     dispatch(update(posts));
       
     setShouldUpdateLikes([!shouldUpdateLikes[0]]);
-  }
-
-  const leavePost = () => {
-    setPost(initialPost);
-    setModalShowPost(true);
   }
 
   const leaveComment = (npostId: number) => {
@@ -62,26 +48,6 @@ function Discover({isGroup}: {isGroup: boolean}) {
 
   const dispatchComment = () => {
     createComment(postId, comment).then(() => updateAll(isGroup));
-  }
-
-  const dispatchPost = async (isGroup?: boolean) => {
-    let createdPost;
-     isGroup ? createdPost = await createGroupPost(post) : createdPost = await createPost(post);
-    // createdPost = {
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // };
-
-    dispatch(add(createdPost));
-    updateAll(isGroup as boolean);
   }
 
   useEffect(() => {
@@ -100,6 +66,14 @@ function Discover({isGroup}: {isGroup: boolean}) {
   return (
     <div id="feedBody">
       <SearchBarGroup />
+      <SubmitComment
+          setComment={setComment}
+          comment={comment}
+          show={modalShowComment}
+          dispatchComment={dispatchComment}
+          onHide={() => setModalShowComment(false)}
+          postId={postId}
+        />
       {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
         post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
     </div>
