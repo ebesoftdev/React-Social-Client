@@ -12,35 +12,6 @@ export default function SearchBarGroup() {
     setInput(e.target.value);
   }
 
-    // useEffect(() => {
-    //   const getGroupID = async () => {
-    //     if (!group) {
-    //       const resp = await reverbClientWithAuth.get(`/api/group/${user.label}`);
-          
-    //       console.log(resp);
-    //       console.log(resp.data);
-    //     }
-    //   };
-
-    //   getGroupID();
-    // }, []);
-    
-
-  // const renderSearchResults = () => {
-  //   if (input) {
-  //     let results:SearchResult[] = [];
-  //     if (initialResults.length) {
-  //       results = initialResults.filter(
-  //         result => result.label.includes(input)
-  //       );
-  //       if (results.length) {
-  //         return (<ResultsListGroup results={results.slice(0, 8)} />);
-  //       }
-  //     }
-  //     return (<ResultsListGroup results={results} />);
-  //   }
-  // }
-
   useEffect(() => {
     if (input !== "") {
       console.log(input);
