@@ -148,6 +148,8 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
     history.push("/editProfile");
   }
 
+  //Test this as well-----------------------------------------------
+
   const getListView = () => {
     //get profile list
     //call flatlist view and give it the profile list
