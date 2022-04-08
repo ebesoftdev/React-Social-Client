@@ -68,7 +68,7 @@ export default function SearchBarGroup() {
         value={input}
         onChange={handleChange}
       />
-      <ResultsListGroup results={initialResults.slice(0, 8)}/>
+      {input && <ResultsListGroup results={initialResults.slice(0, 8)}/>}
     </div>
   );
 }
