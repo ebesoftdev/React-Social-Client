@@ -7,6 +7,8 @@ import MainRouter from './router/MainRouter';
 
 const App = () => {
 
+  // getNotification("sum1d").then(resp => console.log(resp)).catch(err => console.log(err));
+
   //const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   const loggedIn = useAppSelector(state => state.auth[0].token);
