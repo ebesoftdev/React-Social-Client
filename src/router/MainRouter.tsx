@@ -16,6 +16,7 @@ import Feed from "../features/feed/Feed";
 import Register from "../features/register/Register";
 import Login from "../features/login/Login";
 import Landing from "../features/landing/Landing";
+import BookmarkedPosts from "../features/bookmark/BookmarkedPosts";
 
 interface MainRouterProps{
   loggedIn:string
@@ -68,6 +69,9 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           </Route>
           <Route path="/feed">
             <Feed isGroup={false}/>
+          </Route>
+          <Route path="/bookmarks">
+            <BookmarkedPosts isGroup={false} />
           </Route>
         </Switch>
       </div> )
