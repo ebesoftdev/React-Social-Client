@@ -97,10 +97,10 @@ element.item(i).classList.toggle("dark-mode");
 #navbar {
   display: block;
   background-color: var(--background-grey);
-  padding: 1.5vh 0vh 1vh 1.5vh;
+  /* padding: 1.5vh 0vh 1vh 1.5vh;  TOO MUCH PADDING*/
   height: 100%;
   font-size: 3vh;
-  line-height: 30px;
+  line-height: 20px;
   box-shadow: 0px 0px 2px var(--background-grey);
 }
 
@@ -351,6 +351,20 @@ h3 {
   transition-timing-function: ease-in-out;
 }
 
+#bookmarkIcon {
+  width: 25px;
+  transition-property: all;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+
+#bookmarkIcon:hover {
+  transform: translateX(5px);
+  transition-property: all;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+
 /* PROFILE */
 
 #ProfilePage {
@@ -568,11 +582,21 @@ button {
 #postBtn,
 #refreshBtn,
 #reverbButton,
+#bookmarkButton,
 #edit_group,
 #EditGroupProfileButton {
   background-color: var(--background-orange);
   border-color: var(--border-orange);
   box-shadow: 0px 0px 4px var(--border-orange);
+}
+
+/* #reverbButton{
+  width: 10%;
+} */
+
+#bookmarkButton{
+  display: flex;
+  justify-content: space-between;
 }
 
 #postBtn,

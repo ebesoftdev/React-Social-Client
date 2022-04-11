@@ -19,6 +19,7 @@ const PersonalFeed = () => {
   const [modalShowComment, setModalShowComment] = useState(false);
   const [postId, setPostId] = useState(0);
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
+  const [shouldUpdateCanBookmark, setShouldUpdateCanBookmark] = useState([false]);
   const [comment, setComment] = useState(initialComment);
   const [post, setPost] = useState(initialPost);
   
@@ -28,22 +29,11 @@ const PersonalFeed = () => {
 
   const updateAll = async () => {
     const posts = await getPersonalPosts();
-    // const posts = [{
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // }];
     
     dispatch(update(posts));
 
     setShouldUpdateLikes([!shouldUpdateLikes[0]]);
+    setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
 
   const leavePost = () => {
@@ -63,18 +53,6 @@ const PersonalFeed = () => {
 
   const dispatchPost = async () => {
     const createdPost = await createPost(post);
-    // const createdPost = {
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // };
     
     dispatch(add(createdPost));
     updateAll();
@@ -113,8 +91,8 @@ const PersonalFeed = () => {
         />
         
       </div>
-      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
-          post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
+      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
+          post={post} leaveComment={util.leaveComment} key={post.id} />)).reverse()}
     </div>
   );
 }

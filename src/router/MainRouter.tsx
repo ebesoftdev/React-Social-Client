@@ -17,6 +17,7 @@ import Feed from "../features/feed/Feed";
 import Register from "../features/register/Register";
 import Login from "../features/login/Login";
 import Landing from "../features/landing/Landing";
+import BookmarkedPosts from "../features/bookmark/BookmarkedPosts";
 import AllFollowers from "../features/profile/AllFollowers"
 import AllFollowings from "../features/profile/AllFollowings"
 
@@ -78,6 +79,8 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           <Route path="/feed">
             <Feed isGroup={false}/>
           </Route>
+          <Route path="/bookmarks">
+            <BookmarkedPosts isGroup={false} />
           <Route path="/discover">
             <Discover isGroup={false}/>
           </Route>

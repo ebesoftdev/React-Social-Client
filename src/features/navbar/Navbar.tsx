@@ -83,6 +83,10 @@ const NavigationBar = ({ loggedIn }: NavigationBarProps) => {
            Follow Feed
           </NavLink>
 
+          <Nav.Link as={Link} to={"/bookmarks"} className="navbar-link" id="group-Link" eventKey="bookmarks-link" onClick={() => history.push("/bookmarks")}>
+            Bookmarks
+          </Nav.Link>
+          
           <NavLink as={Link} to={"/profile"} id="profileLink" className="navbar-link" eventKey="profile-link" onClick={() => history.push("/profile")}>
             Profile
           </NavLink>
