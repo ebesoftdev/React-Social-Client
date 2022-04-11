@@ -16,20 +16,23 @@ export default function Register() {
   // Registering user into backend database
   const registerUser = (token: string) => {
 
-  // const url = 'http://Reverbapiapplication-env.eba-qjeevjhg.us-west-1.elasticbeanstalk.com/api/user/register';
-  const url = 'http://localhost:5000/api/user/register';
+    // const url = 'http://alreverb3staging-env.eba-r8euexa2.us-east-1.elasticbeanstalk.com/api/user/register';
+    const url = 'http://localhost:5000/api/user/register';
+
 
     const header = {
       'Authorization': token,
       'Content-Type': 'application/json'
     };
+    
     axios.post(url, '', { headers: header, withCredentials: true })
-      .then(response => {})
-      .catch(err => {});
+        .then(response => {})
+        .catch(err => {}); // TODO probably should do something if the registration call fails
+
   }
 
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
 
   // Registering account to firebase, currently only checking if email input is in email format and password is longer than 6 characters.
   util.registerAccount = (event: any) => {
@@ -42,6 +45,7 @@ export default function Register() {
         .then(async (userCredential) => {
           
           const token = await userCredential.user.getIdToken(true);
+          console.log(token);
           registerUser(token);
 
           swal("Success!", "Registration complete, please log in!", "success");

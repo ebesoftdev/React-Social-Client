@@ -12,7 +12,7 @@ describe('Post testing', () => {
   it('should show Oh Yeah', async () => {
 
     const aProfile: Profile = {
-      id: 0,
+      id: '',
       first_name: '',
       last_name: '',
       profile_img: '',
@@ -20,23 +20,29 @@ describe('Post testing', () => {
       about_me: '',
       birthday: '',
       hobby: '',
-      location: ''
+      location: '',
+      followers: [],
+      user_id: '',
+      follower_num: 0,
+      following_num: 0
     }
 
     const aPost: Post = {
-      id: 0,
+      id: '',
       title: 'Shreks Swamp',
       postText: '',
-      embedURL: '',
-      contentType:'',
-      date: '',
-      profile: aProfile,
+      contentType: '',
+      date: new Date(),
       comments: [{
-        commentId: 0,
+        commentId: '',
         commentText: "Donkey!",
-        date: "",
-        profile: aProfile
-      }]
+        date: new Date(),
+        author: null
+      }],
+      contentLink: '',
+      authorID: '',
+      groupID: '',
+      groupName: ''
     }
 
     const dummyFunc = jest.fn();

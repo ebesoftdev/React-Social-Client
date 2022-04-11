@@ -11,6 +11,8 @@ export default function GoodResult({ user }: any) {
     const getProfileId = async () => {
       if (!profile) {
         const resp = await reverbClientWithAuth.get(`/api/profile/getByAuthor/${user.key}`);
+        
+        console.log(resp.data);
         setProfile(resp.data);
       }
     };

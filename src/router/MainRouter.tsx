@@ -5,16 +5,21 @@ import { logout } from '../features/login/authSlice'
 
 // components
 import ProfilePage from "../features/profile/ProfilePage";
+import ResetPassword from "../features/profile/ResetPassword";
 import EditProfilePage from "../features/profile/EditProfilePage";
 import CreateGroupPage from "../features/group/CreateGroupPage";
 import GroupPage from "../features/group/GroupPage";
 import EditGroupPage from "../features/group/EditGroupPage"
 import PersonalFeed from "../features/feed/PersonalFeed";
+import Discover from "../features/discover/Discover";
 import FollowingFeed from "../features/feed/FollowingFeed";
 import Feed from "../features/feed/Feed";
 import Register from "../features/register/Register";
 import Login from "../features/login/Login";
 import Landing from "../features/landing/Landing";
+import BookmarkedPosts from "../features/bookmark/BookmarkedPosts";
+import AllFollowers from "../features/profile/AllFollowers"
+import AllFollowings from "../features/profile/AllFollowings"
 
 interface MainRouterProps{
   loggedIn:string
@@ -41,8 +46,17 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           <Route path="/profile">
             <ProfilePage beep={true} />
           </Route>
+          <Route path="/followers">
+            <AllFollowers />
+          </Route>
+          <Route path="/followings">
+            <AllFollowings />
+          </Route>
           <Route path="/editProfile">
             <EditProfilePage />
+          </Route>
+          <Route path="/resetPassword">
+            <ResetPassword/>
           </Route>
           <Route path="/createGroup">
             <CreateGroupPage />
@@ -64,6 +78,12 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           </Route>
           <Route path="/feed">
             <Feed isGroup={false}/>
+          </Route>
+          <Route path="/bookmarks">
+            <BookmarkedPosts isGroup={false} />
+          </Route>
+          <Route path="/discover">
+            <Discover isGroup={false}/>
           </Route>
         </Switch>
       </div> )

@@ -97,10 +97,10 @@ element.item(i).classList.toggle("dark-mode");
 #navbar {
   display: block;
   background-color: var(--background-grey);
-  padding: 1.5vh 0vh 1vh 1.5vh;
+  /* padding: 1.5vh 0vh 1vh 1.5vh;  TOO MUCH PADDING*/
   height: 100%;
   font-size: 3vh;
-  line-height: 30px;
+  line-height: 20px;
   box-shadow: 0px 0px 2px var(--background-grey);
 }
 
@@ -111,8 +111,8 @@ element.item(i).classList.toggle("dark-mode");
 
 .navbar-link {
   color: var(--text-white);
-  font-size: 3.5vh;
-  margin-top: 7vh;
+  font-size: 3vh;
+  margin-top: 4.5vh;
 }
 
 .navbar-link:hover, #theme-button:hover {
@@ -193,6 +193,11 @@ h3 {
   margin: 40px;
 }
 
+#passwordReset {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
 .loginRow {
   display: block;
   text-align: center;
@@ -256,6 +261,15 @@ h3 {
 .search-result:hover {
   color: var(--text-primary-hover);
 }
+
+.search-resultGroup {
+  color: var(--text-primary);
+}
+
+.search-resultGroup:hover {
+  color: var(--text-primary-hover);
+}
+
 
 .profile-pic-mini {
   height: 35px;
@@ -336,6 +350,20 @@ h3 {
 }
 
 #reverbIcon:hover {
+  transform: translateX(5px);
+  transition-property: all;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+
+#bookmarkIcon {
+  width: 25px;
+  transition-property: all;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+
+#bookmarkIcon:hover {
   transform: translateX(5px);
   transition-property: all;
   transition-duration: 0.5s;
@@ -433,10 +461,43 @@ h3 {
   float: right;
 }
 
+#followers-num:hover {
+  cursor: pointer;
+  opacity: .75;
+}
+
+#following-num:hover {
+  cursor: pointer;
+  opacity: .75;
+}
+
 #followers-num {
   margin-top: -5%;
   padding-right: 10px;
   float: right;
+}
+
+.follower-email {
+  display: block;
+}
+
+.followerCardContainer{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 70vw;
+  color: black;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.followerCard{
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 90%;
+  background-color: #464b50;
+  color: whitesmoke;
 }
 
 /* EDIT PROFILE */
@@ -521,15 +582,26 @@ button {
 }
 
 #EditProfileButton,
+#ResetPassword,
 #loginCard button,
 #postBtn,
 #refreshBtn,
 #reverbButton,
+#bookmarkButton,
 #edit_group,
 #EditGroupProfileButton {
   background-color: var(--background-orange);
   border-color: var(--border-orange);
   box-shadow: 0px 0px 4px var(--border-orange);
+}
+
+/* #reverbButton{
+  width: 10%;
+} */
+
+#bookmarkButton{
+  display: flex;
+  justify-content: space-between;
 }
 
 #postBtn,
@@ -577,13 +649,15 @@ button {
 
 #CancelEdits,
 #EditProfileButton,
+#ResetPassword,
 #UpdateProfile,
 .FormButtons,
 #EditGroupProfileButton {
   border-radius: 10px;
 }
 
-#EditProfileButton {
+#EditProfileButton,
+#ResetPassword {
   position: absolute;
   margin: 0.5vh 0vw 0vh 2vw;
 }
@@ -623,6 +697,7 @@ button {
 }
 
 #EditProfileButton,
+#ResetPassword,
 #leaveCommentBtn,
 #postBtn,
 #refreshBtn,
@@ -633,7 +708,11 @@ button {
 }
 
 #EditProfileButton {
-  margin-left: 30%;
+  margin-left: 50%;
+  margin-bottom: 30px;
+}
+#ResetPassword {
+  margin-left: 10%;
   margin-bottom: 30px;
 }
 
@@ -658,6 +737,7 @@ a,
 body,
 #CancelEdits, #CancelEdits:hover,
 #EditProfileButton, #EditProfileButton:hover,
+#ResetPassword, #ResetPassword:hover,
 .follow-btn, .follow-btn:hover,
 #homeLink, #homeLink:hover,
 #leaveCommentBtn, #leaveCommentBtn:hover,
@@ -665,7 +745,7 @@ body,
 .navbar-link, .navbar-link:hover, #theme-button, #theme-button:hover,
 #postBtn, #postBtn:hover,
 #refreshBtn, #refreshBtn:hover,
-.search-result, .search-result:hover,
+.search-result, .search-result:hover, .search-resultGroup, .search-result:hover
 #search-results,
 #submitCommentBtn, #submitCommentBtn:hover,
 #submitPostBtn, #submitPostBtn:hover,
@@ -683,6 +763,7 @@ body,
 
 #CancelEdits:hover,
 #EditProfileButton:hover,
+#ResetPassword:hover,
 #leaveCommentBtn:hover,
 #loginCard button:hover,
 #postBtn:hover,
@@ -711,7 +792,7 @@ body,
   float: right;
 }
 
-/* Used to make the navbar sticky to the left, Personally created that div to make the sticky work, why does it work??? who knows*/
+
 #NavbarContainer {
   position: sticky;
   top: 0;

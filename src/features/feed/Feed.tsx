@@ -23,6 +23,7 @@ function Feed({isGroup}: {isGroup: boolean}) {
   const [modalShowComment, setModalShowComment] = useState(false);
   const [postId, setPostId] = useState(0);
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
+  const [shouldUpdateCanBookmark, setShouldUpdateCanBookmark] = useState([false]);
   
   const posts = useSelector(selectPosts);
   const group = useSelector(selectGroup);
@@ -52,6 +53,7 @@ function Feed({isGroup}: {isGroup: boolean}) {
     dispatch(update(posts));
       
     setShouldUpdateLikes([!shouldUpdateLikes[0]]);
+    setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
 
   const leavePost = () => {
@@ -130,7 +132,7 @@ function Feed({isGroup}: {isGroup: boolean}) {
           postId={postId}
         />
         </div>
-        {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
+        {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
           post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
     </div>
   );
