@@ -442,10 +442,43 @@ h3 {
   float: right;
 }
 
+#followers-num:hover {
+  cursor: pointer;
+  opacity: .75;
+}
+
+#following-num:hover {
+  cursor: pointer;
+  opacity: .75;
+}
+
 #followers-num {
   margin-top: -5%;
   padding-right: 10px;
   float: right;
+}
+
+.follower-email {
+  display: block;
+}
+
+.followerCardContainer{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 70vw;
+  color: black;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.followerCard{
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 90%;
+  background-color: #464b50;
+  color: whitesmoke;
 }
 
 /* EDIT PROFILE */
