@@ -32,6 +32,11 @@ export const getProfileByUserId = async (id: string) => {
 }
 
 export const getFollowersProfileByUserId = async (id: string) => {
-    const {data: profiles} = await reverbClientWithAuth.get<FollowerResponse[]>("/api/user/getProfileByUserId/"+id);
+    const {data: profiles} = await reverbClientWithAuth.get<FollowerResponse[]>("/api/user/getFollowerProfilesByUserId/"+id);
+    return profiles;
+}
+
+export const getFollowingsProfileByUserId = async (id: string) => {
+    const {data: profiles} = await reverbClientWithAuth.get<FollowerResponse[]>("/api/user/getFollowingProfilesByUserId/"+id);
     return profiles;
 }

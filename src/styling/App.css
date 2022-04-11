@@ -438,6 +438,11 @@ h3 {
   opacity: .75;
 }
 
+#following-num:hover {
+  cursor: pointer;
+  opacity: .75;
+}
+
 #followers-num {
   margin-top: -5%;
   padding-right: 10px;
