@@ -2,6 +2,7 @@ import './styling/App.css';
 import { useAppSelector } from './app/hooks';
 
 // components
+import Notifications from './features/notification/Notifications';
 import Navbar from './features/navbar/Navbar';
 import MainRouter from './router/MainRouter';
 
@@ -15,6 +16,7 @@ const App = () => {
   
   return (
     <div id="app">
+        <Notifications loggedIn={loggedIn}/>
         <Navbar loggedIn={loggedIn}/>
         <div id="main-router-container">
           <MainRouter loggedIn={loggedIn}/>
