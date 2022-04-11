@@ -129,6 +129,40 @@ h3 {
   letter-spacing: 3%;
 }
 
+/* NOTIFICATIONS */
+#notifications-icon {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 6%;
+  left: 93%;
+  z-index: 10;
+  height: 1.5em;
+  width: 1.5em;
+  background-color: var(--background-orange);
+  border-color: var(--border-orange);
+  border-radius: 10%;
+  box-shadow: 0 0 4px var(--border-orange);
+}
+
+#notifications-icon i {
+  font-size: 22px;
+}
+
+#notifications-icon i:hover {
+  color: white;
+}
+
+#notifications-modal .modal-body {
+  min-height: 20vh;
+}
+
+#notifications-modal .modal-body p {
+  margin: auto;
+  text-align: center;
+}
+
 /* LANDING */
 
 #landingCard {

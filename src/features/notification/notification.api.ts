@@ -6,3 +6,9 @@ export const getNotification = async (notificationId: string) => {
     
     return resp;
 }
+
+export const getNotificationsByOwner = async (ownerId: string) => {
+  const resp = await reverbClientWithAuth.get(`/api/notifications/owner/${ownerId}`);
+
+  return resp;
+}
