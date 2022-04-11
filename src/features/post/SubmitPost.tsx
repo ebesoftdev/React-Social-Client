@@ -1,6 +1,5 @@
-import React from "react";
-import {Button, Col, Form, Modal, Row} from "react-bootstrap";
-import { propTypes } from "react-bootstrap/esm/Image";
+import { Button, Col, Form, Modal, Row} from "react-bootstrap";
+import { Post } from '../post/post'
 import swal from 'sweetalert';
 import { formatYT } from "../../util/youtubeFunctions";
 
@@ -43,18 +42,22 @@ function checkEmbed(embedURL: string) {
     
 }
 
+interface Props {
+  setPost: (post: Post) => void,
+  post: Post,
+  dispatchPost: (e?: boolean) => void,
+  showModal: boolean
+  onHide: () => void
+}
 
-
-function SubmitPost(props: any) {
-
+function SubmitPost({setPost, post, dispatchPost, showModal, onHide}: Props) {
     const closeSubmit = () => {
-        if (props.post.postText != "") {
-            let cType = checkEmbed(props.post.contentLink);
-            props.post.contentType = cType;
+        if (post.postText != "") {
+            let cType = checkEmbed(post.contentLink) as string;
+            post.contentType = cType;
 
-
-            props.onHide();
-            props.dispatchPost();
+            onHide();
+            dispatchPost();
         } else {
             swal("", "Posts must have a body!", "error");
         }
@@ -62,7 +65,8 @@ function SubmitPost(props: any) {
 
     return (
         <Modal
-            {...props}
+            show={showModal}
+            onHide={onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -79,11 +83,14 @@ function SubmitPost(props: any) {
                     <Form.Group as={Row} className="mb-3">
                         <Col sm={11}>
                             {/* Next line sets the text that sits in the input. Line after sets the imageURL*/}
-                            <Form.Control
-                                placeholder="Image or Video Embed URL"
-                                onChange={(event) => {
-                                    props.setPost({ ...props.post, contentLink: event.target.value })} 
-                                }/>
+                            <Form.Control                                
+                              placeholder="Image or Video Embed URL"
+                              onChange={(event) => {
+                                setPost({...post} as Post)
+                                setPost({ ...post, contentLink: event.target.value })
+                                } 
+                              } 
+                            />
                         </Col>
                     </Form.Group>
 
@@ -96,8 +103,7 @@ function SubmitPost(props: any) {
                                 style={{ height: "100px"}}
                                 maxLength={1000}
                                 onChange={(event) => {
-                                    props.setPost({ ...props.post, postText: event.target.value })
-                                    
+                                    setPost({ ...post, postText: event.target.value })
                                 }
                             }
                             />

@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPosts, add, update } from '../post/postSlice';
 import { getFollowingPosts, createPost } from '../post/post.api';
 import { createComment } from '../comment/comment.api';
 import { initialPost } from '../post/post';
 import { initialComment } from '../comment/comment';
-import RefreshIcon from '../../assets/images/refreshicon.svg';
 
 // components
 import SearchBar from '../search/SearchBar';
@@ -104,7 +102,7 @@ const FollowingFeed = () => {
           setPost={setPost}
           post={post}
           dispatchPost={util.dispatchPost}
-          show={modalShowPost}
+          showModal={modalShowPost}
           onHide={() => setModalShowPost(false)}
         />
         <SubmitComment

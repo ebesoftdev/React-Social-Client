@@ -16,8 +16,8 @@ export default function Register() {
   // Registering user into backend database
   const registerUser = (token: string) => {
 
-  const url = 'http://Reverbapiapplication-env.eba-qjeevjhg.us-west-1.elasticbeanstalk.com/api/user/register';
-   //const url = 'http://localhost:5000/api/user/register';
+  // const url = 'http://alreverb3staging-env.eba-r8euexa2.us-east-1.elasticbeanstalk.com';
+  const url = 'http://localhost:5000/api/user/register';
 
     const header = {
       'Authorization': token,
@@ -48,7 +48,7 @@ export default function Register() {
           history.push("/login");
         })
         .catch((error) => {
-          
+          console.log(error);
           const errorCode = error.code.slice(5);
           swal("Uh oh!", errorCode, "error")
         });

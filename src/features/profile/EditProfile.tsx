@@ -5,34 +5,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Profile } from "./profile";
 import { selectProfile, setProfile } from './profileSlice';
-import { getProfile, getProfileById, updateProfile } from "./profile.api";
+import { getProfile, updateProfile } from "./profile.api";
 import Upload_Picture from './UploadPicture';
 
-export let util = { update: (e: any) => { }, cancel: (e: any) => { } };
+export let util = { update: (e: SyntheticEvent) => { }, cancel: (e: SyntheticEvent) => { } };
 
 export default function EditProfile() {
-    useEffect(() => {
-        getProfile()
-          .then((profile: Profile) => dispatch(setProfile(profile)))
-          .catch(err => console.log(err));
-    }, []);
-
     const profile = useSelector(selectProfile);
+    const [input, setInput] = useState(profile);
+  
     const dispatch = useDispatch();
-
     const history = useHistory();
 
+    useEffect(() => {
+      getProfile()
+        .then((profile: Profile) => dispatch(setProfile(profile)))
+        .catch(err => console.log(err));
+    }, []);
 
-
-    const [input, setInput] = useState(profile);
-
-    const handleChange = (e: any) => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        });
+    const handleChange = (e: SyntheticEvent) => {
+      const target = e.target as HTMLInputElement;
+      setInput({
+          ...input,
+          [target.name]: target.value
+      });
     };
-
 
     util.update = async (e: SyntheticEvent) => {
         e.preventDefault();
@@ -128,7 +125,6 @@ export default function EditProfile() {
             </Grid>
         </div>
     )
-
 }
 
 

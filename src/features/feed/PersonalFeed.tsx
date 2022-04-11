@@ -108,7 +108,7 @@ const PersonalFeed = () => {
           setPost={setPost}
           post={post}
           dispatchPost={util.dispatchPost}
-          show={modalShowPost}
+          showModal={modalShowPost}
           onHide={() => setModalShowPost(false)}
         />
         <SubmitComment

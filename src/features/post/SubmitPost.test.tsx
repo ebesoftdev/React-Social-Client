@@ -12,7 +12,7 @@ describe('SubmitPost testing', () => {
 
   it('should show Post to Reverb', async ()=>{
 
-    const initialPost: Post = {
+    const initialPost: any = {
       id: 0,
       title: "title",
       postText: "text",

@@ -5,27 +5,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectProfile, setProfile } from "./profileSlice";
 import { getProfile, getProfileById, checkProfileOwnership } from "./profile.api";
 import Image from 'react-bootstrap/Image'
-import { canFollow, followUser, getUserFollowers, getUserFollowings, getUserIdFromProfileId, unfollowUser } from "../follow/followers.api";
-
+import { canFollow, followUser, unfollowUser } from "../follow/followers.api";
 
 /*
     Welcome to the profile information page. 
     This page controls the profiles that appear when you click on a user's name in comments or posts.
 
 */
-export default function ProfileInformation(props: any) {
+export default function ProfileInformation({beep}: {beep: boolean}) {
   const [doneLoading, setDoneLoading] = useState(false);
+  const [showEditButton, setShowEditButton] = useState(false);
+  const [showFollowButton, setShowFollowButton] = useState(false);
+
   const profile = useSelector(selectProfile);
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const [showEditButton, setShowEditButton] = useState(false);
-
-  //attempting follow button hide
-  //added followbutton state similar to showEd
-  const [showFollowButton, setShowFollowButton] = useState(false);
   
-
   // Initial states for our constants
   let initialFollowState = false;
 
@@ -132,8 +128,7 @@ export default function ProfileInformation(props: any) {
             setTimeout(() => setDoneLoading(true), 300);
         })
     }
-    
-  }, [props.beep]); // beep beep :^) (Not sure why this is here. Possibly some sort of ownership parsing?)
+  }, [beep]);
 
   const goToEditProfile = () => {
     history.push("/editProfile");

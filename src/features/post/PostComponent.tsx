@@ -120,7 +120,7 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment }:
             
             <ListGroup id="commentBody" className="list-group-flush" >
                 
-                {post.comments.length > 0 && post.comments.map((comment, idx) => {
+                {post.comments && post.comments.map((comment, idx) => {
 
                     return (
                     <ListGroupItem key={idx}>

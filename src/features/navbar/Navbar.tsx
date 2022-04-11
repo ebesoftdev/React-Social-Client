@@ -1,4 +1,3 @@
-import React from 'react';
 import {Nav, NavLink } from 'react-bootstrap';
 import Logo from '../../assets/images/reverb_logo_final_light.png';
 import { Link, useHistory } from 'react-router-dom';
@@ -23,7 +22,7 @@ function switchTheme() {
 // The function component typed as well as its props defined and typed
 // through destructuring.
 
-const NavigationBar: React.FC<NavigationBarProps> = ({ loggedIn }: { loggedIn: string }) => {
+const NavigationBar = ({ loggedIn }: NavigationBarProps) => {
   //font family and style for the links
   const fontStyle = {
     fontFamily: ''
@@ -31,7 +30,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ loggedIn }: { loggedIn: s
 
   const history = useHistory();
 
-  let sideNavBar = <></>;
+  let sideNavBar;
   if (!loggedIn) {
     // Assigning the navbar to a variable to make it easier to use with the return later.
     sideNavBar = 
