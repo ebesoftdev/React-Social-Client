@@ -33,4 +33,20 @@ describe('AllFollowers testing', () => {
         //expect(update).toBeInTheDocument();
         // expect(dispatchUser).toBeInTheDocument();
       })
-})
+});
+
+describe('AllFollowers testing', () => {
+
+  it('should show email ', async ()=>{
+    const { getByRole } = render(
+      <Provider store={store}>
+          <BrowserRouter>
+            <AllFollowers/>
+          </BrowserRouter>
+      </Provider>
+    );
+    //const email = jest.spyOn(util, 'email');
+    //expect(getByRole("email")).toBeInTheDocument();
+  })
+
+});
