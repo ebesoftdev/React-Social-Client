@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProfile, setProfile } from "./profileSlice";
-import { getProfile, getProfileById, checkProfileOwnership } from "./profile.api";
+import { selectProfile, setProfile, selectFollowerProfiles, updateFollowerResponses } from "./profileSlice";
+import { getProfile, getProfileById, checkProfileOwnership, getProfileByUserId, getFollowersProfileByUserId, getFollowingsProfileByUserId } from "./profile.api";
 import Image from 'react-bootstrap/Image'
 import { canFollow, followUser, getFollowers, unfollowUser } from "../follow/followers.api";
 
@@ -153,11 +153,36 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
     //call flatlist view and give it the profile list
     getProfile()
     .then(res => { 
-                    history.push("/Followers")
-                    console.log(res);
+                    history.push("/Followers");
+                    console.log("AUTH USER PROFILE", res);
                   })
     .catch(err => console.log(err))
   }
+
+  const getFollowerProfilesForUser = () => {
+    console.log("USER ID--> "+ profile.user_id)
+    getFollowersProfileByUserId(profile.user_id)
+      .then(res => {
+        dispatch(updateFollowerResponses(res));
+        history.push("/followers")
+        console.log("SELECTED USER PROFILE:", res);
+      }).catch(err=>{
+        console.log(err);
+      })
+  }
+
+  const getFollowingProfilesForUser = () => {
+    console.log("USER ID--> "+ profile.user_id)
+    getFollowingsProfileByUserId(profile.user_id)
+      .then(res => {
+        dispatch(updateFollowerResponses(res));
+        history.push("/followings")
+        console.log("SELECTED USER PROFILE:", res);
+      }).catch(err=>{
+        console.log(err);
+      })
+  }
+
 
   return(
     doneLoading ? (
@@ -169,8 +194,8 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
             <Card.Title id = "ProfileName">
               {profile.first_name} {profile.last_name} 
               <div>
-                <h6 id="followers-num" onClick={getListView}>followers: {profile.follower_num}</h6>
-                <h6 id="following-num">following: {profile.following_num}</h6>
+                <h6 id="followers-num" onClick={getFollowerProfilesForUser}>followers: {profile.follower_num}</h6>
+                <h6 id="following-num" onClick={getFollowingProfilesForUser}>following: {profile.following_num}</h6>
               </div>
             </Card.Title>
             

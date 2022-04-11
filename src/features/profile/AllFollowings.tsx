@@ -14,7 +14,7 @@ export let util = {
     dispatchUser: () => { }
 }
 
-const AllFollowers = () => {
+const AllFollowings = () => {
 
     const dispatch = useDispatch();
 
@@ -44,7 +44,7 @@ const AllFollowers = () => {
 
     return (
         <>
-            <h1 className="text-center">Followers</h1>
+            <h1 className="text-center">Followings</h1>
             <div className="followerCardContainer">
             {followerProfiles.map(follower => (
             <Card className="followerCard m-3">
@@ -65,6 +65,6 @@ const AllFollowers = () => {
     )
 }
 
-export default AllFollowers;
+export default AllFollowings;
 
 
