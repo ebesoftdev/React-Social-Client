@@ -33,16 +33,4 @@ describe('AllFollowers testing', () => {
         //expect(update).toBeInTheDocument();
         // expect(dispatchUser).toBeInTheDocument();
       })
-
-      it('should show email', async ()=>{
-
-        const { getByText } = render(
-          <Provider store={store}>
-              <BrowserRouter>
-                <AllFollowers/>
-              </BrowserRouter>
-          </Provider>
-        );
-        expect(getByText("Email")).toBeInTheDocument();
-      })
 })
