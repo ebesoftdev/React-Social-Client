@@ -92,7 +92,7 @@ const PersonalFeed = () => {
         
       </div>
       {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
-          post={post} leaveComment={util.leaveComment} key={post.id} />)).reverse()}
+          post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
     </div>
   );
 }

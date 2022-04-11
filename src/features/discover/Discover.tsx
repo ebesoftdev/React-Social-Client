@@ -21,6 +21,7 @@ function Discover({isGroup}: {isGroup: boolean}) {
   const [modalShowComment, setModalShowComment] = useState(false);
   const [postId, setPostId] = useState(0);
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
+  const [shouldUpdateCanBookmark, setShouldUpdateCanBookmark] = useState([false]);
   
   const posts = useSelector(selectPosts);
   const group = useSelector(selectGroup);
@@ -38,6 +39,7 @@ function Discover({isGroup}: {isGroup: boolean}) {
     dispatch(update(posts));
       
     setShouldUpdateLikes([!shouldUpdateLikes[0]]);
+    setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
 
   const leaveComment = (npostId: number) => {
@@ -74,7 +76,7 @@ function Discover({isGroup}: {isGroup: boolean}) {
           onHide={() => setModalShowComment(false)}
           postId={postId}
         />
-      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
+      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
         post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
     </div>
   );

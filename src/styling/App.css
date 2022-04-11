@@ -111,8 +111,8 @@ element.item(i).classList.toggle("dark-mode");
 
 .navbar-link {
   color: var(--text-white);
-  font-size: 3.5vh;
-  margin-top: 7vh;
+  font-size: 3vh;
+  margin-top: 4.5vh;
 }
 
 .navbar-link:hover, #theme-button:hover {
@@ -787,7 +787,7 @@ body,
   float: right;
 }
 
-/* Used to make the navbar sticky to the left, Personally created that div to make the sticky work, why does it work??? who knows*/
+
 #NavbarContainer {
   position: sticky;
   top: 0;

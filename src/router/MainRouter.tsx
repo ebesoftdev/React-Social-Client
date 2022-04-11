@@ -81,6 +81,7 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           </Route>
           <Route path="/bookmarks">
             <BookmarkedPosts isGroup={false} />
+          </Route>
           <Route path="/discover">
             <Discover isGroup={false}/>
           </Route>
