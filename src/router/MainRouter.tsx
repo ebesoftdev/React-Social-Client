@@ -5,11 +5,13 @@ import { logout } from '../features/login/authSlice'
 
 // components
 import ProfilePage from "../features/profile/ProfilePage";
+import ResetPassword from "../features/profile/ResetPassword";
 import EditProfilePage from "../features/profile/EditProfilePage";
 import CreateGroupPage from "../features/group/CreateGroupPage";
 import GroupPage from "../features/group/GroupPage";
 import EditGroupPage from "../features/group/EditGroupPage"
 import PersonalFeed from "../features/feed/PersonalFeed";
+import Discover from "../features/discover/Discover";
 import FollowingFeed from "../features/feed/FollowingFeed";
 import Feed from "../features/feed/Feed";
 import Register from "../features/register/Register";
@@ -52,6 +54,9 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           <Route path="/editProfile">
             <EditProfilePage />
           </Route>
+          <Route path="/resetPassword">
+            <ResetPassword/>
+          </Route>
           <Route path="/createGroup">
             <CreateGroupPage />
           </Route>
@@ -72,6 +77,9 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           </Route>
           <Route path="/feed">
             <Feed isGroup={false}/>
+          </Route>
+          <Route path="/discover">
+            <Discover isGroup={false}/>
           </Route>
         </Switch>
       </div> )

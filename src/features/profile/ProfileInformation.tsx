@@ -148,17 +148,6 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
     history.push("/editProfile");
   }
 
-  const getListView = () => {
-    //get profile list
-    //call flatlist view and give it the profile list
-    getProfile()
-    .then(res => { 
-                    history.push("/Followers");
-                    console.log("AUTH USER PROFILE", res);
-                  })
-    .catch(err => console.log(err))
-  }
-
   const getFollowerProfilesForUser = () => {
     console.log("USER ID--> "+ profile.user_id)
     getFollowersProfileByUserId(profile.user_id)
@@ -183,6 +172,9 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
       })
   }
 
+  const goToResetPasswordPage = () => {
+    history.push("/resetPassword");
+  }
 
   return(
     doneLoading ? (
@@ -215,7 +207,12 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
             </Card.Text>
           </Card.Body>
         </div>
-        {showEditButton ? <Button id="EditProfileButton" onClick={goToEditProfile}>Edit Profile</Button> : <></>}
+        {showEditButton ?
+          <>
+            <Button id="EditProfileButton" onClick={goToEditProfile}>Edit Profile</Button>
+            <Button id="ResetPassword" onClick={goToResetPasswordPage}>Reset Password</Button>
+          </> 
+        : <></>}
       </div>
     ) : (
       <Image

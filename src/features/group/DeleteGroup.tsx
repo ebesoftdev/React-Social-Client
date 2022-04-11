@@ -5,9 +5,9 @@ import { deleteGroup } from "./Group.api";
 import { clear } from "../post/postSlice"
 import { SyntheticEvent } from "react";
 
-interface Props {groupName: string, onHide: (e: SyntheticEvent) => void}
+interface Props {groupName: string, onHide: (e: SyntheticEvent) => void, show:boolean}
 
-export default function DeleteGroup({groupName, onHide}: Props) {
+export default function DeleteGroup({groupName, onHide, show}: Props) {
     const dispatch = useDispatch();
 
     const history = useHistory();
@@ -19,6 +19,7 @@ export default function DeleteGroup({groupName, onHide}: Props) {
 
     return (
         <Modal
+            show={show}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
