@@ -16,7 +16,7 @@ export default function Register() {
   // Registering user into backend database
   const registerUser = (token: string) => {
 
-  const url = 'http://alreverb3staging-env.eba-r8euexa2.us-east-1.elasticbeanstalk.com';
+  const url = 'http://alreverb3staging-env.eba-r8euexa2.us-east-1.elasticbeanstalk.com/api/user/register';
   // const url = 'http://localhost:5000/api/user/register';
 
     const header = {
