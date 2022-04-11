@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from '../../app/store';
 import AllFollowers, { util } from './AllFollowers';
 import { BrowserRouter } from 'react-router-dom';
+import { update } from './profileSlice';
 
 describe('AllFollowers testing', () => {
 
@@ -29,7 +30,7 @@ describe('AllFollowers testing', () => {
         );
         const updateAll = jest.spyOn(util, 'updateAll');
         const dispatchUser = jest.spyOn(util, 'dispatchUser');
-          
+        //expect(update).toBeInTheDocument();
+        // expect(dispatchUser).toBeInTheDocument();
       })
-
 })
