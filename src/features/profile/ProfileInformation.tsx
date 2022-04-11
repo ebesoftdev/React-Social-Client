@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProfile, setProfile } from "./profileSlice";
-import { getProfile, getProfileById, checkProfileOwnership } from "./profile.api";
+import { selectProfile, setProfile, selectFollowerProfiles, updateFollowerResponses } from "./profileSlice";
+import { getProfile, getProfileById, checkProfileOwnership, getProfileByUserId, getFollowersProfileByUserId, getFollowingsProfileByUserId } from "./profile.api";
 import Image from 'react-bootstrap/Image'
-import { canFollow, followUser, unfollowUser } from "../follow/followers.api";
+import { canFollow, followUser, getFollowers, unfollowUser } from "../follow/followers.api";
+
 
 /*
     Welcome to the profile information page. 
@@ -15,6 +16,7 @@ import { canFollow, followUser, unfollowUser } from "../follow/followers.api";
 export default function ProfileInformation({beep}: {beep: boolean}) {
   const [doneLoading, setDoneLoading] = useState(false);
   const [showEditButton, setShowEditButton] = useState(false);
+  const [showFollowersButton, setShowFollowersButton] = useState(false);
   const [showFollowButton, setShowFollowButton] = useState(false);
 
   const profile = useSelector(selectProfile);
@@ -37,6 +39,9 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
           try {
             const profileRes = await getProfile();
             dispatch(setProfile(profileRes));
+            console.log(profileRes)
+
+
           } catch (err) {
             console.log(err);
           }
@@ -95,10 +100,18 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
         // Gets their profile from the stored profile for the user.
         
         getProfile()
-          .then(res => dispatch(setProfile(res)))
-          .catch(err => console.log(err));
+          .then(res => { 
+                          dispatch(setProfile(res)); 
+                          console.log(res);
+                        })
+          .catch(err => console.log(err))
+
+        //getFollowers()
+        //  .then(res => console.log(res))
+        //  .catch(err => console.log(err))
 
         // Show the edit button and hide the follow
+        setShowFollowersButton(true);
         setShowEditButton(true); 
         setShowFollowButton(false);
         
@@ -113,6 +126,7 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
         // Check if the profile is owned by the user who navigated into it.
         checkProfileOwnership(id).then((owns) => {
             // Set the buttons appropriately to the ownership rights.
+            setShowFollowersButton(true);
             setShowEditButton(owns);
             setShowFollowButton(!owns);
 
@@ -133,6 +147,35 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
   const goToEditProfile = () => {
     history.push("/editProfile");
   }
+
+  const getFollowerProfilesForUser = () => {
+    console.log("USER ID--> "+ profile.user_id)
+    getFollowersProfileByUserId(profile.user_id)
+      .then(res => {
+        dispatch(updateFollowerResponses(res));
+        history.push("/followers")
+        console.log("SELECTED USER PROFILE:", res);
+      }).catch(err=>{
+        console.log(err);
+      })
+  }
+
+  const getFollowingProfilesForUser = () => {
+    console.log("USER ID--> "+ profile.user_id)
+    getFollowingsProfileByUserId(profile.user_id)
+      .then(res => {
+        dispatch(updateFollowerResponses(res));
+        history.push("/followings")
+        console.log("SELECTED USER PROFILE:", res);
+      }).catch(err=>{
+        console.log(err);
+      })
+  }
+
+  const goToResetPasswordPage = () => {
+    history.push("/resetPassword");
+  }
+
   return(
     doneLoading ? (
       <div>
@@ -143,8 +186,8 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
             <Card.Title id = "ProfileName">
               {profile.first_name} {profile.last_name} 
               <div>
-                <h6 id="followers-num">followers: {profile.follower_num}</h6>
-                <h6 id="following-num">following: {profile.following_num}</h6>
+                <h6 id="followers-num" onClick={getFollowerProfilesForUser}>followers: {profile.follower_num}</h6>
+                <h6 id="following-num" onClick={getFollowingProfilesForUser}>following: {profile.following_num}</h6>
               </div>
             </Card.Title>
             
@@ -164,7 +207,12 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
             </Card.Text>
           </Card.Body>
         </div>
-        {showEditButton ? <Button id="EditProfileButton" onClick={goToEditProfile}>Edit Profile</Button> : <></>}
+        {showEditButton ?
+          <>
+            <Button id="EditProfileButton" onClick={goToEditProfile}>Edit Profile</Button>
+            <Button id="ResetPassword" onClick={goToResetPasswordPage}>Reset Password</Button>
+          </> 
+        : <></>}
       </div>
     ) : (
       <Image

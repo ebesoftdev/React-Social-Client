@@ -1,95 +1,65 @@
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import SubmitPost from '../post/SubmitPost';
 import { selectPosts, add, update } from '../post/postSlice';
 import { getPersonalPosts, createPost } from '../post/post.api';
-import PostComponent from '../post/PostComponent';
-import SubmitComment from '../comment/SubmitComment';
 import { createComment } from '../comment/comment.api';
 import { initialPost } from '../post/post';
 import { initialComment } from '../comment/comment';
 import RefreshIcon from '../../assets/images/refreshicon.svg';
-import SearchBar from '../search/SearchBar';
 
-export let util = {
-  updateAll: () => { },
-  leavePost: () => { },
-  leaveComment: (npostId: number) => { },
-  dispatchComment: () => { },
-  dispatchPost: () => { }
-};
+// components
+import SearchBar from '../search/SearchBar';
+import PostComponent from '../post/PostComponent';
+import SubmitPost from '../post/SubmitPost';
+import SubmitComment from '../comment/SubmitComment';
 
 const PersonalFeed = () => {
-  const dispatch = useDispatch();
-
-  const posts = useSelector(selectPosts);
-
   const [modalShowPost, setModalShowPost] = useState(false);
   const [modalShowComment, setModalShowComment] = useState(false);
-
   const [postId, setPostId] = useState(0);
-
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
+  const [shouldUpdateCanBookmark, setShouldUpdateCanBookmark] = useState([false]);
+  const [comment, setComment] = useState(initialComment);
+  const [post, setPost] = useState(initialPost);
+  
+  const posts = useSelector(selectPosts);
+  
+  const dispatch = useDispatch();
 
-  util.updateAll = async () => {
+  const updateAll = async () => {
     const posts = await getPersonalPosts();
-    // const posts = [{
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // }];
     
     dispatch(update(posts));
 
     setShouldUpdateLikes([!shouldUpdateLikes[0]]);
+    setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
 
-  const [comment, setComment] = useState(initialComment);
-  const [post, setPost] = useState(initialPost);
-
-  util.leavePost = () => {
+  const leavePost = () => {
     setPost(initialPost);
     setModalShowPost(true);
   }
 
-  util.leaveComment = (npostId: number) => {
+  const leaveComment = (npostId: number) => {
     setComment(initialComment);
     setPostId(npostId);
     setModalShowComment(true);
   }
 
-  util.dispatchComment = () => {
-    createComment(postId, comment).then(() => util.updateAll());
+  const dispatchComment = () => {
+    createComment(postId, comment).then(() => updateAll());
   }
 
-  util.dispatchPost = async () => {
+  const dispatchPost = async () => {
     const createdPost = await createPost(post);
-    // const createdPost = {
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // };
     
     dispatch(add(createdPost));
+    updateAll();
   }
 
   useEffect(() => {
-    util.updateAll();
+    updateAll();
   }, [])
 
   return (
@@ -97,17 +67,17 @@ const PersonalFeed = () => {
       <SearchBar />
       <div id="postColumn">
         <div id="feedButtons"> 
-          <Button data-testid="postButton" id="postBtn" className='feed-btns' variant="primary" onClick={() => util.leavePost()}>
+          <Button data-testid="postButton" id="postBtn" className='feed-btns' variant="primary" onClick={() => leavePost()}>
             + Create Post
           </Button>
-          <Button data-testid="refreshButton" id="refreshBtn" className='feed-btns' variant="primary" onClick={() => util.updateAll()}>
+          <Button data-testid="refreshButton" id="refreshBtn" className='feed-btns' variant="primary" onClick={() => updateAll()}>
             <img id="refresh-icon" src={RefreshIcon} /> Refresh
           </Button>
         </div>
         <SubmitPost
           setPost={setPost}
           post={post}
-          dispatchPost={util.dispatchPost}
+          dispatchPost={dispatchPost}
           showModal={modalShowPost}
           onHide={() => setModalShowPost(false)}
         />
@@ -115,14 +85,14 @@ const PersonalFeed = () => {
           setComment={setComment}
           comment={comment}
           show={modalShowComment}
-          dispatchComment={util.dispatchComment}
+          dispatchComment={dispatchComment}
           onHide={() => setModalShowComment(false)}
           postId={postId}
         />
         
       </div>
-      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes}
-          post={post} leaveComment={util.leaveComment} key={post.id} />)).reverse()}
+      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
+          post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
     </div>
   );
 }
