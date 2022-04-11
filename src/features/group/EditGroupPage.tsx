@@ -103,6 +103,7 @@ export default function EditGroupPage() {
             <DeleteGroup
                 onHide={() => setShowDelete(false)}
                 groupName={group.name}
+                show={showDelete}
             />
         </div>
     )
