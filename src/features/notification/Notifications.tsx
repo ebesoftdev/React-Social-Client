@@ -24,7 +24,7 @@ const Notifications = ({loggedIn}: {loggedIn: string}) => {
       getNotificationsByOwner(user.id)
       .then(res => {
         console.log(res);
-        setNotifications(res);
+        setNotifications(res.data);
       })
       .catch(err => console.log(err));
     }
@@ -47,7 +47,19 @@ const Notifications = ({loggedIn}: {loggedIn: string}) => {
             <Modal.Title>{"Notifications"}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>No notifications</p>
+            {notifications ? 
+              notifications.map((notification: any) => (
+                <div id={notification.id}>
+                  {notification.type_id.typeName === 'like' ?
+                    (<p>{notification.otherUser.email} liked your post!</p>)
+                  :
+                    (<p>{notification.otherUser.email} commented on your post!</p>)
+                  } 
+                </div>
+              ))
+            : 
+              (<p>No notifications</p>)
+            }
           </Modal.Body>
         </Modal>
       </>
