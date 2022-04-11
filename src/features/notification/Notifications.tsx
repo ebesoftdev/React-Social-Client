@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Modal } from "react-bootstrap";
 import { getNotificationsByOwner } from './notification.api';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectAuth } from '../login/authSlice';
 import { selectUser } from '../login/userSlice';
+import { selectNotifications, setNotifications } from './notificationSlice'; 
 
 const Notifications = ({loggedIn}: {loggedIn: string}) => {
   const [showModal, setShowModal] = useState(false);
-  const [notifications, setNotifications] = useState<any>([]);
 
   const token = useSelector(selectAuth);
   const user = useSelector(selectUser);
+  const notifications = useSelector(selectNotifications);
+
+  const dispatch = useDispatch();
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -24,7 +27,7 @@ const Notifications = ({loggedIn}: {loggedIn: string}) => {
       getNotificationsByOwner(user.id)
       .then(res => {
         console.log(res);
-        setNotifications(res.data);
+        dispatch(setNotifications(res.data));
       })
       .catch(err => console.log(err));
     }

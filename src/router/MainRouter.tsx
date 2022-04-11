@@ -1,7 +1,7 @@
 import { Switch, Route, Redirect } from "react-router-dom";
-
 import { useAppDispatch } from "../app/hooks";
-import { logout } from '../features/login/authSlice'
+import { logout } from '../features/login/authSlice';
+import { clearNotifications } from '../features/notification/notificationSlice';
 
 // components
 import ProfilePage from "../features/profile/ProfilePage";
@@ -28,6 +28,7 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
   // Logout now dispatching to store to update state
   const doLogout = () => {
     dispatch(logout());
+    dispatch(clearNotifications());
   }
 
   // Login is now handled in the Login page component.
