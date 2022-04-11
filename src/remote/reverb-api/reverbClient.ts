@@ -4,7 +4,6 @@ import { store } from '../../app/store'
 const reverbClient = axios.create( {
   // baseURL: 'http://alreverb3staging-env.eba-r8euexa2.us-east-1.elasticbeanstalk.com',
   baseURL: 'http://localhost:5000',
-
   headers: {
     'Content-Type': 'application/json'
   },
