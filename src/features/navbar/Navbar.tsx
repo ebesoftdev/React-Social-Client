@@ -91,6 +91,10 @@ const NavigationBar = ({ loggedIn }: NavigationBarProps) => {
             Create Group
           </Nav.Link>
 
+          <NavLink as={Link} to={"/discover"} id="discoverLink" className="navbar-link" eventKey="discover-link" onClick={() => history.push("/discover")}>
+            Discover
+          </NavLink>
+
           <NavLink as={Link} to={"/logout"} id="logoutLink" className="navbar-link" eventKey="logout-link">
             Logout
           </NavLink>
