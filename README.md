@@ -19,16 +19,22 @@ Reverb (styled as ReverB) is an upcoming social media app designed for Revature 
 - Docker
 - Git
 - Maven
-
+- 
 ## Features
-
-- Users can register and log in
-- Users can edit their personal profile including a picture and bio
-- Users can create posts on their profile including images and text
-- Users can view a feed of posts from other profiles
-- Users can comment on posts
-- Users can "reverb" (like) comments and posts
+- Profanity filter 
 - Sessions are managed using Firebase
+
+- Users can:
+- Register and log in
+- Edit their profile including a picture and bio
+- Post images and text to their profile
+- View feed of posts from other profiles
+- View list of followers 
+- Comment on and bookmark posts
+- Like comments and posts
+- Receive notifications
+- Search for groups
+- Reset password
 
 ## Getting Started
 
