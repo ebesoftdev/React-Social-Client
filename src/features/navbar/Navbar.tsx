@@ -75,11 +75,11 @@ const NavigationBar = ({ loggedIn }: NavigationBarProps) => {
 
           <button id="theme-button" onClick={() => switchTheme()}>🌞/🌜</button>
 
-          <NavLink id="personalFeed" className="navbar-link" as={Link} to={"/feed/personal"} eventKey="home">
+          <NavLink id="personalFeed" className="navbar-link" as={Link} to={"/personal"} eventKey="home">
            Personal Feed
           </NavLink>
           
-          <NavLink id="followingFeed" className="navbar-link" as={Link} to={"/feed/following"} eventKey="home">
+          <NavLink id="followingFeed" className="navbar-link" as={Link} to={"/following"} eventKey="home">
            Follow Feed
           </NavLink>
 

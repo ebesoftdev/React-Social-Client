@@ -70,10 +70,10 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           <Route path="/logout">
             {doLogout}
           </Route>
-          <Route path="/feed/personal">
+          <Route path="/personal">
             <PersonalFeed />
           </Route>
-          <Route path="/feed/following">
+          <Route path="/following">
             <FollowingFeed />
           </Route>
           <Route path="/feed">
