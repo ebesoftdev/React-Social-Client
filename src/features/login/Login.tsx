@@ -7,8 +7,13 @@ import { getUser } from './Login.api';
 import { login } from './authSlice';
 import { updateUser } from './userSlice';
 import { useHistory } from 'react-router-dom';
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import swal from 'sweetalert';
 
 export let util = {loginAccount: (event: any) => {}};
+let pwr = {passwordReset: (event: any) => {}};
+//Firebase
+const auth = getAuth();
 
 export default function Login() {
 
@@ -16,6 +21,7 @@ export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
+
 
   // Verifying login credentials through firebase, alerting with error message coming from Firebase
   util.loginAccount = async (event: any) => {
@@ -48,7 +54,26 @@ export default function Login() {
       }
     }
   }
+  
+  pwr.passwordReset = async (event: any) => {
+      //Firebase
+    if (emailRef.current !== null) {
+      sendPasswordResetEmail(auth, emailRef.current.value)
+      .then(() => {
+        swal("Completed!", "Password reset instructions sent to " + emailRef.current?.value + "!", "success");
+        // Password reset email sent!
+        // makes a popup or something...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        swal("Unsuccessful", "User not found, please enter another email address", "error");
+        // ..
+      });
+      }
 
+  }
+  
   return (
     <Container className="d-flex align-items-center justify-content-center"
       style={{ minHeight: "100vh" }}
@@ -69,6 +94,10 @@ export default function Login() {
                     <Form.Control type="password" ref={passwordRef} required />
                   </Form.Group>
                   <Button data-testid="submitButton" className="w-100 mt-2" type="submit" onClick={(event) => util.loginAccount(event)}>Login</Button>
+                    {/* update styling for cleaner code */}
+                  <p id="passwordReset" onClick={(event) => pwr.passwordReset(event)} style={{cursor: 'pointer'}}> 
+                    Reset your password.
+                  </p>
                 </Form>
               </Card.Body>
             </Card>

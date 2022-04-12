@@ -1,4 +1,4 @@
-import { Profile } from "./profile";
+import { FollowerResponse, Profile } from "./profile";
 import { reverbClientWithAuth } from "../../remote/reverb-api/reverbClient"
 
 export const getProfile = async () => {
@@ -26,3 +26,17 @@ export const checkProfileOwnership = async (id: string) => {
     return owns;
 }
 
+export const getProfileByUserId = async (id: string) => {
+    const {data: profile} = await reverbClientWithAuth.get<Profile>("/api/user/getProfileByUserId/"+id);
+    return profile;
+}
+
+export const getFollowersProfileByUserId = async (id: string) => {
+    const {data: profiles} = await reverbClientWithAuth.get<FollowerResponse[]>("/api/user/getFollowerProfilesByUserId/"+id);
+    return profiles;
+}
+
+export const getFollowingsProfileByUserId = async (id: string) => {
+    const {data: profiles} = await reverbClientWithAuth.get<FollowerResponse[]>("/api/user/getFollowingProfilesByUserId/"+id);
+    return profiles;
+}

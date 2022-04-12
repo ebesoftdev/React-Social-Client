@@ -75,14 +75,18 @@ const NavigationBar = ({ loggedIn }: NavigationBarProps) => {
 
           <button id="theme-button" onClick={() => switchTheme()}>🌞/🌜</button>
 
-          <NavLink id="personalFeed" className="navbar-link" as={Link} to={"/feed/personal"} eventKey="home">
+          <NavLink id="personalFeed" className="navbar-link" as={Link} to={"/personal"} eventKey="home">
            Personal Feed
           </NavLink>
           
-          <NavLink id="followingFeed" className="navbar-link" as={Link} to={"/feed/following"} eventKey="home">
+          <NavLink id="followingFeed" className="navbar-link" as={Link} to={"/following"} eventKey="home">
            Follow Feed
           </NavLink>
 
+          <Nav.Link as={Link} to={"/bookmarks"} className="navbar-link" id="group-Link" eventKey="bookmarks-link" onClick={() => history.push("/bookmarks")}>
+            Bookmarks
+          </Nav.Link>
+          
           <NavLink as={Link} to={"/profile"} id="profileLink" className="navbar-link" eventKey="profile-link" onClick={() => history.push("/profile")}>
             Profile
           </NavLink>
@@ -92,6 +96,10 @@ const NavigationBar = ({ loggedIn }: NavigationBarProps) => {
           <Nav.Link as={Link} to={"/createGroup"} className="navbar-link" id="group-Link" eventKey="group-link" onClick ={() => history.push("/createGroup")}>
             Create Group
           </Nav.Link>
+
+          <NavLink as={Link} to={"/discover"} id="discoverLink" className="navbar-link" eventKey="discover-link" onClick={() => history.push("/discover")}>
+            Discover
+          </NavLink>
 
           <NavLink as={Link} to={"/logout"} id="logoutLink" className="navbar-link" eventKey="logout-link">
             Logout

@@ -14,7 +14,14 @@ export interface Profile {
   user_id: string,
   follower_num: number,
   following_num: number,
-  followers: Array<User>
+  followers: Array<User>,
+}
+
+export interface FollowerResponse{
+  firstName: string,
+  lastName: string,
+  email: string,
+  profilePicURL: string
 }
 
 export const initialProfile = {
