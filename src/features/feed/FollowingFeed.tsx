@@ -94,7 +94,8 @@ const FollowingFeed = () => {
         />
         
       </div>
-      {posts.map((post) => (<PostComponent author={post.authorID} shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
+      <h2 className='text-center mt-3'>Follow Feed</h2>
+      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
           post={post} leaveComment={util.leaveComment} key={post.id} />)).reverse()}
     </div>
   );
