@@ -87,7 +87,7 @@ function BookmarkedPosts({isGroup}: {isGroup: boolean}) {
             />
             <h2 className='text-center mt-3'>Bookmarks</h2>
             {posts.map((post) => (
-                <PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
+                <PostComponent author={post.authorID} shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
                 post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
         </div>
       );

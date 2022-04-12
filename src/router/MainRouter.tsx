@@ -1,7 +1,11 @@
 import { Switch, Route, Redirect } from "react-router-dom";
-
 import { useAppDispatch } from "../app/hooks";
-import { logout } from '../features/login/authSlice'
+import { logout } from '../features/login/authSlice';
+import { clear as clearPosts } from '../features/post/postSlice';
+import { setProfile } from '../features/profile/profileSlice';
+import { updateUser } from '../features/login/userSlice';
+import { setGroup } from '../features/group/groupSlice';
+import { clearNotifications } from '../features/notification/notificationSlice';
 
 // components
 import ProfilePage from "../features/profile/ProfilePage";
@@ -10,7 +14,6 @@ import EditProfilePage from "../features/profile/EditProfilePage";
 import CreateGroupPage from "../features/group/CreateGroupPage";
 import GroupPage from "../features/group/GroupPage";
 import EditGroupPage from "../features/group/EditGroupPage"
-import PersonalFeed from "../features/feed/PersonalFeed";
 import Discover from "../features/discover/Discover";
 import FollowingFeed from "../features/feed/FollowingFeed";
 import Feed from "../features/feed/Feed";
@@ -31,6 +34,11 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
   // Logout now dispatching to store to update state
   const doLogout = () => {
     dispatch(logout());
+    dispatch(clearPosts());
+    dispatch(setProfile({}));
+    dispatch(updateUser({id: '', email: ''}));
+    dispatch(setGroup({}));
+    dispatch(clearNotifications());
   }
 
   // Login is now handled in the Login page component.
@@ -70,10 +78,7 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           <Route path="/logout">
             {doLogout}
           </Route>
-          <Route path="/personal">
-            <PersonalFeed />
-          </Route>
-          <Route path="/following">
+          <Route path="/feed/following">
             <FollowingFeed />
           </Route>
           <Route path="/feed">
