@@ -2,6 +2,7 @@ import { Button, Col, Form, Modal, Row} from "react-bootstrap";
 import { Post } from '../post/post'
 import swal from 'sweetalert';
 import { formatYT } from "../../util/youtubeFunctions";
+import profanityFilter from '../../util/profanityFilter';
 
 // This function checks the embedURL and returns the appropriate contentType
 function checkEmbed(embedURL: string) {
@@ -53,11 +54,17 @@ interface Props {
 function SubmitPost({setPost, post, dispatchPost, showModal, onHide}: Props) {
     const closeSubmit = () => {
         if (post.postText != "") {
-            let cType = checkEmbed(post.contentLink) as string;
-            post.contentType = cType;
+            
+            if (profanityFilter.filter(post.postText)) {
+              let cType = checkEmbed(post.contentLink) as string;
+              post.contentType = cType;
 
-            onHide();
-            dispatchPost();
+              onHide();
+              dispatchPost();
+            } 
+            else
+              swal("", "Inappropriate content", "error");
+
         } else {
             swal("", "Posts must have a body!", "error");
         }
