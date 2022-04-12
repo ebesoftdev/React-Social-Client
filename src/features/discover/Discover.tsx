@@ -76,7 +76,7 @@ function Discover({isGroup}: {isGroup: boolean}) {
           onHide={() => setModalShowComment(false)}
           postId={postId}
         />
-      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
+      {posts.map((post) => (<PostComponent author={post.authorID} shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
         post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
     </div>
   );
