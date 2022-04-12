@@ -75,7 +75,7 @@ const NavigationBar = ({ loggedIn }: NavigationBarProps) => {
 
           <button id="theme-button" onClick={() => switchTheme()}>🌞/🌜</button>
           
-          <NavLink id="followingFeed" className="navbar-link" as={Link} to={"/feed/following"} eventKey="home">
+          <NavLink id="followingFeed" className="navbar-link" as={Link} to={"/following"} eventKey="home">
            Follow Feed
           </NavLink>
 
@@ -87,9 +87,15 @@ const NavigationBar = ({ loggedIn }: NavigationBarProps) => {
             Profile
           </NavLink>
 
+
+
           <Nav.Link as={Link} to={"/createGroup"} className="navbar-link" id="group-Link" eventKey="group-link" onClick ={() => history.push("/createGroup")}>
             Create Group
           </Nav.Link>
+
+          <NavLink as={Link} to={"/discover"} id="discoverLink" className="navbar-link" eventKey="discover-link" onClick={() => history.push("/discover")}>
+            Discover
+          </NavLink>
 
           <NavLink as={Link} to={"/logout"} id="logoutLink" className="navbar-link" eventKey="logout-link">
             Logout

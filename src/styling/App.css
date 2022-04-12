@@ -111,8 +111,8 @@ element.item(i).classList.toggle("dark-mode");
 
 .navbar-link {
   color: var(--text-white);
-  font-size: 3.5vh;
-  margin-top: 7vh;
+  font-size: 3vh;
+  margin-top: 4.5vh;
 }
 
 .navbar-link:hover, #theme-button:hover {
@@ -227,6 +227,11 @@ h3 {
   margin: 40px;
 }
 
+#passwordReset {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
 .loginRow {
   display: block;
   text-align: center;
@@ -290,6 +295,15 @@ h3 {
 .search-result:hover {
   color: var(--text-primary-hover);
 }
+
+.search-resultGroup {
+  color: var(--text-primary);
+}
+
+.search-resultGroup:hover {
+  color: var(--text-primary-hover);
+}
+
 
 .profile-pic-mini {
   height: 35px;
@@ -481,10 +495,43 @@ h3 {
   float: right;
 }
 
+#followers-num:hover {
+  cursor: pointer;
+  opacity: .75;
+}
+
+#following-num:hover {
+  cursor: pointer;
+  opacity: .75;
+}
+
 #followers-num {
   margin-top: -5%;
   padding-right: 10px;
   float: right;
+}
+
+.follower-email {
+  display: block;
+}
+
+.followerCardContainer{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 70vw;
+  color: black;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.followerCard{
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 90%;
+  background-color: #464b50;
+  color: whitesmoke;
 }
 
 /* EDIT PROFILE */
@@ -732,7 +779,7 @@ body,
 .navbar-link, .navbar-link:hover, #theme-button, #theme-button:hover,
 #postBtn, #postBtn:hover,
 #refreshBtn, #refreshBtn:hover,
-.search-result, .search-result:hover,
+.search-result, .search-result:hover, .search-resultGroup, .search-result:hover
 #search-results,
 #submitCommentBtn, #submitCommentBtn:hover,
 #submitPostBtn, #submitPostBtn:hover,
@@ -779,7 +826,7 @@ body,
   float: right;
 }
 
-/* Used to make the navbar sticky to the left, Personally created that div to make the sticky work, why does it work??? who knows*/
+
 #NavbarContainer {
   position: sticky;
   top: 0;

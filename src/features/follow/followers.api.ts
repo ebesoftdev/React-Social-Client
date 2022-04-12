@@ -1,4 +1,6 @@
 import { reverbClientWithAuth } from '../../remote/reverb-api/reverbClient'
+import { Author } from '../comment/author';
+import User from '../login/User';
 
 
 export const getUserFollowers = async (id: string): Promise<number> => {
@@ -8,6 +10,12 @@ export const getUserFollowers = async (id: string): Promise<number> => {
 
 export const getUserFollowings = async (id: string): Promise<number> => {
     const {data} = await reverbClientWithAuth.get<number>('/api/user/get-following-num/' + id);
+    return data;
+}
+
+export const getFollowers = async (): Promise<User []> => {
+    const {data} = await reverbClientWithAuth.get<User []>('/api/user/get-owner-followers');
+    console.log(data)
     return data;
 }
 
