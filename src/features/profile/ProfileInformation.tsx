@@ -174,6 +174,7 @@ export default function ProfileInformation({beep}: {beep: boolean}) {
 
   const goToResetPasswordPage = () => {
     history.push("/resetPassword");
+
   }
 
   return(

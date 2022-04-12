@@ -16,7 +16,7 @@ describe('ProfileInformation testing', () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <BrowserRouter>
-          <ProfileInformation />
+          <ProfileInformation beep={false} />
         </BrowserRouter>
       </Provider>
     );
@@ -32,7 +32,7 @@ describe('ProfileInformation testing', () => {
     const { getByText } = render(
       <Provider store={store}>
         <BrowserRouter>
-          <ProfileInformation />
+          <ProfileInformation beep={false} />
         </BrowserRouter>
       </Provider>
     );
