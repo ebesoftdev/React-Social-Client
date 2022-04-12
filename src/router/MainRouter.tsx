@@ -1,6 +1,10 @@
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { logout } from '../features/login/authSlice';
+import { clear as clearPosts } from '../features/post/postSlice';
+import { setProfile } from '../features/profile/profileSlice';
+import { updateUser } from '../features/login/userSlice';
+import { setGroup } from '../features/group/groupSlice';
 import { clearNotifications } from '../features/notification/notificationSlice';
 
 // components
@@ -10,7 +14,6 @@ import EditProfilePage from "../features/profile/EditProfilePage";
 import CreateGroupPage from "../features/group/CreateGroupPage";
 import GroupPage from "../features/group/GroupPage";
 import EditGroupPage from "../features/group/EditGroupPage"
-import PersonalFeed from "../features/feed/PersonalFeed";
 import FollowingFeed from "../features/feed/FollowingFeed";
 import Feed from "../features/feed/Feed";
 import Register from "../features/register/Register";
@@ -28,6 +31,10 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
   // Logout now dispatching to store to update state
   const doLogout = () => {
     dispatch(logout());
+    dispatch(clearPosts());
+    dispatch(setProfile({}));
+    dispatch(updateUser({id: '', email: ''}));
+    dispatch(setGroup({}));
     dispatch(clearNotifications());
   }
 
@@ -61,9 +68,6 @@ const MainRouter= ({loggedIn}: MainRouterProps) => {
           </Route>
           <Route path="/logout">
             {doLogout}
-          </Route>
-          <Route path="/feed/personal">
-            <PersonalFeed />
           </Route>
           <Route path="/feed/following">
             <FollowingFeed />

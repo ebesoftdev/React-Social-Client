@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Modal } from "react-bootstrap";
-import { getNotificationsByOwner } from './notification.api';
+import { getNotificationsByOwner, setNotificationsToRead } from './notification.api';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAuth } from '../login/authSlice';
 import { selectUser } from '../login/userSlice';
@@ -16,22 +16,24 @@ const Notifications = ({loggedIn}: {loggedIn: string}) => {
   const dispatch = useDispatch();
 
   const toggleModal = () => {
+    if (showModal) {
+      const ids = notifications.map(notification => notification.id) as string[];
+
+      setNotificationsToRead(ids);
+    }
+    
     setShowModal(!showModal);
   }
 
   useEffect(() => {
-    console.log(user.id);
-    console.log(token);
-    
     if (user.id && token) {
       getNotificationsByOwner(user.id)
       .then(res => {
-        console.log(res);
         dispatch(setNotifications(res.data));
       })
       .catch(err => console.log(err));
     }
-  }, [token, user]);
+  }, [token, user, showModal]);
   
   if (!loggedIn)
     return (<></>)
@@ -50,7 +52,7 @@ const Notifications = ({loggedIn}: {loggedIn: string}) => {
             <Modal.Title>{"Notifications"}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {notifications ? 
+            {notifications.length ? 
               notifications.map((notification: any) => (
                 <div id={notification.id}>
                   {notification.type_id.typeName === 'like' ?

@@ -8,8 +8,12 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     setNotifications: (state, action) => {
-      for (let i = 0; i < action.payload.length; i++) {
-        state[i] = action.payload[i];
+      if (!action.payload.length)
+        state.length = 0;
+      else {
+        for (let i = 0; i < action.payload.length; i++) {
+          state[i] = action.payload[i];
+        }
       }
     },
     clearNotifications: (state) => {

@@ -6,14 +6,15 @@ import { bookmarkPost, checkIfPostCanBeBookmarked, removeBookmark } from "../boo
 import { Link } from "react-router-dom";
 import ReverbIcon from '../../assets/images/reverb_icon_final.png';
 import { formatYT } from "../../util/youtubeFunctions";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../login/userSlice";
+import { setNotifications } from "../notification/notificationSlice";
 import { getProfileByAuthor, getProfileById } from "../profile/profile.api";
-import { postNotification } from "../notification/notification.api";
+import { postNotification, getNotificationsByOwner } from "../notification/notification.api";
 import { Profile, initialProfile } from "../profile/profile";
 
-const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCanBookmark }: 
-    { shouldUpdateLikes: boolean[], post: Post, leaveComment: any, shouldUpdateCanBookmark: boolean[] }) =>  {
+const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, shouldUpdateCanBookmark }: 
+    { author: string, shouldUpdateLikes: boolean[], post: Post, leaveComment: any, shouldUpdateCanBookmark: boolean[] }) =>  {
 
     const initialLikes: number = 0;
     const [canLike, setCanLike] = useState(false);
@@ -23,6 +24,8 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCa
     const [commentAuthor, setCommentAuthor] = useState<Profile>(initialProfile);
 
     const user = useSelector(selectUser);
+
+    const dispatch = useDispatch();
 
     const updateLikes = () => {
         // console.log("Calling backend to update likes on post " + post.id);
@@ -55,7 +58,7 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCa
                 const otherUserId = otherUser.getAttribute('id') as string;
 
                 try {
-                  const res = await postNotification(
+                  await postNotification(
                     {
                       otherUserId, 
                       type_id: {
@@ -64,7 +67,10 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCa
                       }
                     }
                   );
-                  console.log(res);
+                  
+                  const res = await getNotificationsByOwner(user.id);
+                  dispatch(setNotifications(res.data));
+
                 } catch (err) {
                   console.log(err);
                 }
@@ -201,7 +207,7 @@ const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCa
                 
                 
             <Card.Body>
-                <Button data-testid="submitButton" id="leaveCommentBtn" onClick={() => leaveComment(post.id)}>Leave Comment</Button>
+                <Button data-testid="submitButton" id="leaveCommentBtn" onClick={() => leaveComment(post.id, author)}>Leave Comment</Button>
             </Card.Body>
         </Card>
     );

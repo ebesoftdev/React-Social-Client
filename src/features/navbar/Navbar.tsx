@@ -74,10 +74,6 @@ const NavigationBar = ({ loggedIn }: NavigationBarProps) => {
         <div id="navbar-links">
 
           <button id="theme-button" onClick={() => switchTheme()}>🌞/🌜</button>
-
-          <NavLink id="personalFeed" className="navbar-link" as={Link} to={"/feed/personal"} eventKey="home">
-           Personal Feed
-          </NavLink>
           
           <NavLink id="followingFeed" className="navbar-link" as={Link} to={"/feed/following"} eventKey="home">
            Follow Feed
