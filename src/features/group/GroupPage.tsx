@@ -50,6 +50,7 @@ export default function GroupPage() {
   return (doneLoading ?
       <>
           <GroupInformation />
+          <h2 className='text-center mt-3'>Group Feed</h2>
           <Feed isGroup={true} />
       </>
       :(<Image id="LoadingImg" src = {"https://app.revature.com/assets/images/ajax-loader-logo.0cd555cc.gif"} 
