@@ -4,7 +4,6 @@ import postsReducer from '../features/post/postSlice';
 import profileReducer from '../features/profile/profileSlice';
 import userReducer from '../features/login/userSlice';
 import groupReducer from '../features/group/groupSlice';
-import notificationsReducer from '../features/notification/notificationSlice';
 
 
 export const store = configureStore({
@@ -13,8 +12,7 @@ export const store = configureStore({
     posts: postsReducer,
     profile: profileReducer,
     user: userReducer,
-    group: groupReducer,
-    notifications: notificationsReducer
+    group: groupReducer
   }
 });
 

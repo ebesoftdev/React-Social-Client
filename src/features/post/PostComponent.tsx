@@ -1,20 +1,17 @@
-import { SyntheticEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import { Post } from './post';
 import { checkIfPostCanBeLiked, getNumLikes, likePost, unlikePost } from "../like/likes.api";
 import { bookmarkPost, checkIfPostCanBeBookmarked, removeBookmark } from "../bookmark/bookmarks.api";
 import { Link } from "react-router-dom";
 import ReverbIcon from '../../assets/images/reverb_icon_final.png';
+import BookmarkIcon from '../../assets/images/bookmark_icon.png';
 import { formatYT } from "../../util/youtubeFunctions";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUser } from "../login/userSlice";
-import { setNotifications } from "../notification/notificationSlice";
-import { getProfileByAuthor, getProfileById } from "../profile/profile.api";
-import { postNotification, getNotificationsByOwner } from "../notification/notification.api";
+import { getProfile, getProfileByAuthor, getProfileById } from "../profile/profile.api";
 import { Profile, initialProfile } from "../profile/profile";
 
-const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, shouldUpdateCanBookmark }: 
-    { author: string, shouldUpdateLikes: boolean[], post: Post, leaveComment: any, shouldUpdateCanBookmark: boolean[] }) =>  {
+const  PostComponent =  ({ shouldUpdateLikes, post, leaveComment, shouldUpdateCanBookmark }: 
+    { shouldUpdateLikes: boolean[], post: Post, leaveComment: any, shouldUpdateCanBookmark: boolean[] }) =>  {
 
     const initialLikes: number = 0;
     const [canLike, setCanLike] = useState(false);
@@ -22,10 +19,6 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
     const [canBookmark, setCanBookmark] = useState(true); 
     const [authorProfile, setAuthorProfile] = useState<Profile>(initialProfile);
     const [commentAuthor, setCommentAuthor] = useState<Profile>(initialProfile);
-
-    const user = useSelector(selectUser);
-
-    const dispatch = useDispatch();
 
     const updateLikes = () => {
         // console.log("Calling backend to update likes on post " + post.id);
@@ -44,40 +37,17 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
 
     
 
-    const likePostFunc = (e: SyntheticEvent) => {
+    const likePostFunc = () => {
         if (canLike)
         {
             setCanLike(false);
             likePost(post.id).then(async () => {
                 //instead of making another DB call, it just updates the likes by 1
                 setLikes(likes + 1);
-
-                const target = e.target as HTMLInputElement;
-                const button = target.parentNode as HTMLButtonElement;
-                const otherUser = button.parentNode as HTMLDivElement;
-                const otherUserId = otherUser.getAttribute('id') as string;
-
-                try {
-                  await postNotification(
-                    {
-                      otherUserId, 
-                      type_id: {
-                        id: '1',
-                        typeName: 'like'
-                      }
-                    }
-                  );
-                  
-                  const res = await getNotificationsByOwner(user.id);
-                  dispatch(setNotifications(res.data));
-
-                } catch (err) {
-                  console.log(err);
-                }
-            }).catch((err) => {
+            }).catch((e) => {
                 //unsuccessful
                 setCanLike(true);
-                console.log(err)
+                console.log(e)
             })
         }
         else 
@@ -85,10 +55,10 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
             setCanLike(true);
             unlikePost(post.id).then(async () => {
                 setLikes(likes - 1);
-            }).catch((err) => {
+            }).catch((e) => {
                 //unsuccessful
                 setCanLike(false);
-                console.log(err)
+                console.log(e)
             })
         }
         
@@ -160,7 +130,7 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
 
     return (
         <Card id="postCard">
-            <Card.Header id={user.id}>
+            <Card.Header>
                 {/* Link to the group's profile in Reverb*/}
                 {post.groupName && <Card.Subtitle id="group"><Link to={`/group/${post.groupName}`}>{`${post.groupName} / `}</Link></Card.Subtitle>}
                 {/* Link to the poster's profile in Reverb*/}
@@ -168,7 +138,7 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
                 {/*Date that the post was made.*/}
                 <Card.Text id = "postTime">{"" + new Date(post.date + 'Z').toLocaleString() }</Card.Text>
                 {/*To like the post*/}
-                <Button data-testid="reverbButton" id="reverbButton" onClick={likePostFunc} variant="warning"
+                <Button data-testid="reverbButton" id="reverbButton" onClick={() => likePostFunc()} variant="warning"
                     style={{ float: 'right', marginTop: "-2rem", fontSize:"20px" }}>{likes}<img id="reverbIcon" src={ReverbIcon} alt="Click to Like!"/></Button>
                 
                 {canBookmark?
@@ -207,7 +177,7 @@ const  PostComponent =  ({ author, shouldUpdateLikes, post, leaveComment, should
                 
                 
             <Card.Body>
-                <Button data-testid="submitButton" id="leaveCommentBtn" onClick={() => leaveComment(post.id, author)}>Leave Comment</Button>
+                <Button data-testid="submitButton" id="leaveCommentBtn" onClick={() => leaveComment(post.id)}>Leave Comment</Button>
             </Card.Body>
         </Card>
     );

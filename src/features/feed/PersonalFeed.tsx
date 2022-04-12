@@ -2,56 +2,36 @@ import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPosts, add, update } from '../post/postSlice';
-import { getAllGroupPosts, getAllPosts, createGroupPost, createPost } from '../post/post.api';
+import { getPersonalPosts, createPost } from '../post/post.api';
 import { createComment } from '../comment/comment.api';
 import { initialPost } from '../post/post';
 import { initialComment } from '../comment/comment';
-import RefreshIcon from '../../assets/images/refreshicon.svg'
-import { selectGroup } from '../group/groupSlice';
-import { Post } from "../post/post"
+import RefreshIcon from '../../assets/images/refreshicon.svg';
 
 // components
 import SearchBar from '../search/SearchBar';
-import PostComponent from '../post/PostComponent'
+import PostComponent from '../post/PostComponent';
+import SubmitPost from '../post/SubmitPost';
 import SubmitComment from '../comment/SubmitComment';
-import SubmitPost from '../post/SubmitPost'
 
-function Feed({isGroup}: {isGroup: boolean}) {
-  const [comment, setComment] = useState(initialComment);
-  const [post, setPost] = useState(initialPost);
+const PersonalFeed = () => {
   const [modalShowPost, setModalShowPost] = useState(false);
   const [modalShowComment, setModalShowComment] = useState(false);
   const [postId, setPostId] = useState(0);
   const [shouldUpdateLikes, setShouldUpdateLikes] = useState([false]);
   const [shouldUpdateCanBookmark, setShouldUpdateCanBookmark] = useState([false]);
+  const [comment, setComment] = useState(initialComment);
+  const [post, setPost] = useState(initialPost);
   
   const posts = useSelector(selectPosts);
-  const group = useSelector(selectGroup);
   
   const dispatch = useDispatch();
 
-  const updateAll = async (isGroup: boolean) => {
-    let posts;
-    if (isGroup) {
-       posts = await getAllGroupPosts(group.name);
-    } else {
-       posts = await getAllPosts();
-    }
-    // posts = [{
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // }];
+  const updateAll = async () => {
+    const posts = await getPersonalPosts();
     
     dispatch(update(posts));
-      
+
     setShouldUpdateLikes([!shouldUpdateLikes[0]]);
     setShouldUpdateCanBookmark([!shouldUpdateCanBookmark[0]]);
   }
@@ -68,41 +48,19 @@ function Feed({isGroup}: {isGroup: boolean}) {
   }
 
   const dispatchComment = () => {
-    createComment(postId, comment).then(() => updateAll(isGroup));
+    createComment(postId, comment).then(() => updateAll());
   }
 
-  const dispatchPost = async (isGroup?: boolean) => {
-    let createdPost;
-     isGroup ? createdPost = await createGroupPost(post) : createdPost = await createPost(post);
-    // createdPost = {
-    //   id: "123445",
-    //   title: "title",
-    //   postText: "some text here",
-    //   contentLink: "",
-    //   contentType: "",
-    //   date: new Date(),
-    //   comments: [],
-    //   authorID: "Aidan",
-    //   groupID: "",
-    //   groupName: ""
-    // };
-
+  const dispatchPost = async () => {
+    const createdPost = await createPost(post);
+    
     dispatch(add(createdPost));
-    updateAll(isGroup as boolean);
+    updateAll();
   }
 
   useEffect(() => {
-    updateAll(isGroup);
-    
-    let newPost: Post = post;
-    if (isGroup) { 
-      newPost.groupID = group.groupID;
-    } else {
-      newPost.groupID = "";
-    }
-
-    setPost(newPost);
-  }, []);
+    updateAll();
+  }, [])
 
   return (
     <div id="feedBody">
@@ -112,7 +70,7 @@ function Feed({isGroup}: {isGroup: boolean}) {
           <Button data-testid="postButton" id="postBtn" className='feed-btns' variant="primary" onClick={() => leavePost()}>
             + Create Post
           </Button>
-          <Button data-testid="refreshButton" id="refreshBtn" className='feed-btns' variant="primary" onClick={() => updateAll(isGroup)}>
+          <Button data-testid="refreshButton" id="refreshBtn" className='feed-btns' variant="primary" onClick={() => updateAll()}>
             <img id="refresh-icon" src={RefreshIcon} /> Refresh
           </Button>
         </div>
@@ -131,11 +89,13 @@ function Feed({isGroup}: {isGroup: boolean}) {
           onHide={() => setModalShowComment(false)}
           postId={postId}
         />
-        </div>
-        {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
+        
+      </div>
+      <h2 className='text-center mt-3'>Personal Feed</h2>
+      {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
           post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
     </div>
   );
 }
 
-export default Feed;
+export default PersonalFeed;
