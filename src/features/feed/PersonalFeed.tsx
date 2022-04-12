@@ -91,6 +91,7 @@ const PersonalFeed = () => {
         />
         
       </div>
+      <h2 className='text-center mt-3'>Personal Feed</h2>
       {posts.map((post) => (<PostComponent shouldUpdateLikes={shouldUpdateLikes} shouldUpdateCanBookmark={shouldUpdateCanBookmark}
           post={post} leaveComment={leaveComment} key={post.id} />)).reverse()}
     </div>
