@@ -60,7 +60,7 @@ export default function Login() {
     if (emailRef.current !== null) {
       sendPasswordResetEmail(auth, emailRef.current.value)
       .then(() => {
-        swal("Completed!", "Password reset instructions sent to " + emailRef.current?.value + "!", "success");
+        swal("Completed!", "Password reset instructions sent to" + emailRef.current?.value + "!", "success");
         // Password reset email sent!
         // makes a popup or something...
       })
